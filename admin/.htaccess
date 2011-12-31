@@ -1,0 +1,6 @@
+RewriteEngine On
+RewriteRule api/(.*)$ /api.php$1
+
+<IfModule mod_rewrite.c>
+    RewriteRule ^(.*/)?\.svn/ - [F]
+</IfModule>

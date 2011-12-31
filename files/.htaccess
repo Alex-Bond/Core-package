@@ -1,0 +1,3 @@
+RewriteEngine On
+RewriteRule dl(.*)$ /download.php$1
+#RewriteRule cr(.*)$ /create.php$1

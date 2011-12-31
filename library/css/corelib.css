@@ -1,0 +1,108 @@
+body {
+	margin-left: 0px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	background-image: url(/images/bg.jpg);
+	text-size: 14px;
+}
+body,td,th {
+	font-family:calibri, "segoe UI", arial;
+}
+a:link {
+	text-decoration: none;
+	color: #000;
+}
+a:visited {
+	text-decoration: none;
+	color: #000;
+}
+a:hover {
+	text-decoration: underline;
+	color: #000;
+}
+a:active {
+	text-decoration: none;
+	color: #000;
+}
+.content {
+	width:100% auto;
+	background-color:#ececec;
+	padding: 10px;
+}
+.content_predm {
+	font-size: 18px;
+}
+.com_row{
+	margin-left:20px;
+	padding:2px;
+	padding-left:10px;
+	height:20px;
+	/*background:url(/images/predm_row_bg.png) no-repeat center left;*/
+	font-size: 16px;
+    cursor:  pointer;
+}
+
+.predm_row{
+	margin-left:20px;
+	padding:2px;
+	padding-left:10px;
+	height:20px;
+	/*background:url(/images/predm_row_bg.png) no-repeat center left;*/
+	font-size: 16px;
+}
+
+.redactor_title {
+	font-size:18px;
+	background-color:#FFF;
+	padding: 5px;
+	padding-left: 20px;
+	}
+.redactor_content {
+	font-size:18px;
+	background-color:#c8c8c8;
+	padding: 5px;
+	}
+    
+/*Books list*/
+
+.book_title{
+    color: navy;
+    font-size: 18px;
+}
+.book_row{
+    background-color: #e3e3e3;
+    padding: 10px;
+}
+
+/*Video*/
+
+.video_bg{
+	position:fixed;
+	top:0;
+	left:0;
+	height:100%;
+	width:100%;
+	background:#333;
+	display:none;
+    margin: auto;
+
+}
+#videoplayer1{
+	display:none;
+}
+.videoplayer{
+    background-color: #000;
+}
+.ui-dialog-title {
+	font-size:14px;
+}
+.tab {
+padding:2px;
+border:solid #CCC 10px;
+text-align:center;
+display:block;
+float:left;
+margin-right:10px;
+cursor:pointer;
+}
