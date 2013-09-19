@@ -1,6 +1,6 @@
 <?php
 
-$f_testid = (int) readGetVar('testid');
+$f_testid = (int)readGetVar('testid');
 
 unregisterTestData();
 
@@ -28,7 +28,7 @@ if ($f_testid) {
                         $i_questioncount_by_subjectid = getRecordCount($srv_settings['table_prefix'] . 'questions', "subjectid=" . $i_rSet2->fields['subjectid'] . " AND question_type NOT IN (" . QUESTION_TYPE_RANDOM . ")" . ($yt_questionids ? " AND questionid NOT IN (" . implode(',', $yt_questionids) . ")" : ""));
                         if ($i_questioncount_by_subjectid > 0) {
 
-                            srand((double) microtime() * 10000000);
+                            srand((double)microtime() * 10000000);
                             $i_rSet3 = $g_db->SelectLimit("SELECT questionid, question_points FROM " . $srv_settings['table_prefix'] . "questions WHERE subjectid=" . $i_rSet2->fields['subjectid'] . " AND question_type NOT IN (" . QUESTION_TYPE_RANDOM . ")" . ($yt_questionids ? " AND questionid NOT IN (" . implode(',', $yt_questionids) . ")" : ""), 1, rand(0, $i_questioncount_by_subjectid - 1));
                             if (!$i_rSet3) {
                                 showDBError(__FILE__, 3);
@@ -52,11 +52,11 @@ if ($f_testid) {
             if ($yt_questioncount > 0) {
 
                 $yt_test_qsperpage = $i_rSet1->fields["test_qsperpage"];
-                $yt_test_showqfeedback = (boolean) $i_rSet1->fields["test_showqfeedback"];
-                $yt_result_showanswers = (boolean) $i_rSet1->fields["test_result_showanswers"];
-                $yt_result_showpoints = (boolean) $i_rSet1->fields["test_result_showpoints"];
-                $yt_result_showgrade = (boolean) $i_rSet1->fields["test_result_showgrade"];
-                $yt_gscaleid = (int) $i_rSet1->fields["gscaleid"];
+                $yt_test_showqfeedback = (boolean)$i_rSet1->fields["test_showqfeedback"];
+                $yt_result_showanswers = (boolean)$i_rSet1->fields["test_result_showanswers"];
+                $yt_result_showpoints = (boolean)$i_rSet1->fields["test_result_showpoints"];
+                $yt_result_showgrade = (boolean)$i_rSet1->fields["test_result_showgrade"];
+                $yt_gscaleid = (int)$i_rSet1->fields["gscaleid"];
 
 
                 $grade = $g_db->Execute("SELECT * from kkztgscales_grades WHERE gscaleid=" . $i_rSet1->fields["gscaleid"] . " ORDER BY grade_from");
@@ -79,10 +79,10 @@ if ($f_testid) {
 
                 if ($i_rSet1->fields["test_shuffleq"])
                     $yt_questions = getShuffledArray($yt_questions);
-                $yt_shufflea = (boolean) $i_rSet1->fields["test_shufflea"];
+                $yt_shufflea = (boolean)$i_rSet1->fields["test_shufflea"];
 
-                $i_testtime = (int) $i_rSet1->fields["test_time"];
-                $yt_test_timeforceout = (boolean) $i_rSet1->fields["test_timeforceout"];
+                $i_testtime = (int)$i_rSet1->fields["test_time"];
+                $yt_test_timeforceout = (boolean)$i_rSet1->fields["test_timeforceout"];
                 if ($i_testtime < 0)
                     $i_testtime = 0;
 
@@ -112,7 +112,7 @@ if ($f_testid) {
                 $G_SESSION["yt_result_showanswers"] = $yt_result_showanswers;
                 $G_SESSION["yt_result_showpoints"] = $yt_result_showpoints;
                 $G_SESSION["yt_result_showgrade"] = $yt_result_showgrade;
-                $G_SESSION["yt_result_showpdf"] = (boolean) $i_rSet1->fields["test_result_showpdf"] && ($i_rSet1->fields["rtemplateid"] > 0);
+                $G_SESSION["yt_result_showpdf"] = (boolean)$i_rSet1->fields["test_result_showpdf"] && ($i_rSet1->fields["rtemplateid"] > 0);
                 $G_SESSION["yt_reportgradecondition"] = $i_rSet1->fields["test_reportgradecondition"];
                 $G_SESSION["yt_gscaleid"] = $yt_gscaleid;
                 $G_SESSION["yt_points"] = $yt_points;
@@ -126,9 +126,13 @@ if ($f_testid) {
 
                 // TO REDIS
 
-                $key = new Rediska_Key('test_'.$G_SESSION["resultid"]);
+                $key = new Rediska_Key('test_' . $G_SESSION["resultid"]);
                 $key->expire(60 * 60 * 24 * 10);
                 $key->setValue($G_SESSION);
+
+                // TO DB
+
+                setUserSessionTest($G_SESSION["userid"], $G_SESSION["resultid"]);
 
                 if (!empty($i_rSet1->fields["test_instructions"]))
                     include_once($DOCUMENT_PAGES . "test-5.inc.php");

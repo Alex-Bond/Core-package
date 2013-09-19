@@ -26,8 +26,11 @@ if ($g_db->Execute("UPDATE " . $srv_settings['table_prefix'] . "results SET resu
     showDBError(__FILE__, 2);
 
 $G_SESSION['yt_test_finished'] = 1;
-$key = new Rediska_Key('test_'.$G_SESSION["resultid"]);
+$key = new Rediska_Key('test_' . $G_SESSION["resultid"]);
 $key->setValue($G_SESSION);
+
+removeUserSessionDB($G_SESSION["userid"]);
+
 
 if ($G_SESSION["yt_attempts"] > 0) {
     $g_db->Execute("INSERT INTO " . $srv_settings['table_prefix'] . "tests_attempts (testid, userid, test_attempt_count) VALUES (" . $G_SESSION["testid"] . ", " . $G_SESSION["userid"] . ", 0);");

@@ -25,6 +25,9 @@ if (isset($G_SESSION['questionid'])) {
                 if ($G_SESSION['yt_questionno'] <= $G_SESSION['yt_questioncount']) {
                     $key = new Rediska_Key('test_'.$G_SESSION["resultid"]);
                     $key->setValue($G_SESSION);
+
+                    setUserSessionTest($G_SESSION["userid"], $G_SESSION["resultid"]);
+
                     gotoLocation('test.php');
                 } else {
 

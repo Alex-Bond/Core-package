@@ -7,13 +7,13 @@
 -- Версия сервера: 5.5.17
 -- Версия PHP: 5.3.8
 
-SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT = @@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS = @@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION = @@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8 */;
 
 --
@@ -27,16 +27,18 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE IF NOT EXISTS `kkztanswers` (
-  `answerid` int(10) unsigned NOT NULL DEFAULT '0',
-  `questionid` int(10) unsigned NOT NULL DEFAULT '0',
-  `answer_text` longtext NOT NULL,
-  `answer_feedback` text NOT NULL,
-  `answer_correct` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `answer_percents` float NOT NULL DEFAULT '0',
-  `isregexp` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `iscasesensitive` tinyint(3) unsigned NOT NULL DEFAULT '1',
-  PRIMARY KEY (`questionid`,`answerid`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  `answerid`        INT(10) UNSIGNED    NOT NULL DEFAULT '0',
+  `questionid`      INT(10) UNSIGNED    NOT NULL DEFAULT '0',
+  `answer_text`     LONGTEXT            NOT NULL,
+  `answer_feedback` TEXT                NOT NULL,
+  `answer_correct`  TINYINT(3) UNSIGNED NOT NULL DEFAULT '0',
+  `answer_percents` FLOAT               NOT NULL DEFAULT '0',
+  `isregexp`        TINYINT(3) UNSIGNED NOT NULL DEFAULT '0',
+  `iscasesensitive` TINYINT(3) UNSIGNED NOT NULL DEFAULT '1',
+  PRIMARY KEY (`questionid`, `answerid`)
+)
+  ENGINE =MyISAM
+  DEFAULT CHARSET =utf8;
 
 -- --------------------------------------------------------
 
@@ -45,11 +47,13 @@ CREATE TABLE IF NOT EXISTS `kkztanswers` (
 --
 
 CREATE TABLE IF NOT EXISTS `kkztconfig` (
-  `configid` int(10) unsigned NOT NULL DEFAULT '0',
-  `config_name` varchar(256) NOT NULL DEFAULT '',
-  `config_value` text NOT NULL,
+  `configid`     INT(10) UNSIGNED NOT NULL DEFAULT '0',
+  `config_name`  VARCHAR(256)     NOT NULL DEFAULT '',
+  `config_value` TEXT             NOT NULL,
   PRIMARY KEY (`configid`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+)
+  ENGINE =MyISAM
+  DEFAULT CHARSET =utf8;
 
 -- --------------------------------------------------------
 
@@ -156,14 +160,16 @@ INSERT INTO `kkztconfig` (`configid`, `config_name`, `config_value`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `kkztetemplates` (
-  `etemplateid` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `etemplate_name` varbinary(255) NOT NULL DEFAULT '',
-  `etemplate_description` varbinary(255) NOT NULL DEFAULT '',
-  `etemplate_from` varbinary(255) NOT NULL DEFAULT '',
-  `etemplate_subject` varbinary(255) NOT NULL DEFAULT '',
-  `etemplate_body` blob NOT NULL,
+  `etemplateid`           INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `etemplate_name`        VARBINARY(255)   NOT NULL DEFAULT '',
+  `etemplate_description` VARBINARY(255)   NOT NULL DEFAULT '',
+  `etemplate_from`        VARBINARY(255)   NOT NULL DEFAULT '',
+  `etemplate_subject`     VARBINARY(255)   NOT NULL DEFAULT '',
+  `etemplate_body`        BLOB             NOT NULL,
   PRIMARY KEY (`etemplateid`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+)
+  ENGINE =MyISAM
+  DEFAULT CHARSET =utf8;
 
 -- --------------------------------------------------------
 
@@ -172,23 +178,25 @@ CREATE TABLE IF NOT EXISTS `kkztetemplates` (
 --
 
 CREATE TABLE IF NOT EXISTS `kkztgroups` (
-  `groupid` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `group_name` varchar(512) NOT NULL DEFAULT '',
-  `group_description` varchar(1024) NOT NULL DEFAULT '',
-  `access_tests` tinyint(3) unsigned NOT NULL DEFAULT '1',
-  `access_testmanager` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `access_gradingsystems` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `access_emailtemplates` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `access_reporttemplates` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `access_reportsmanager` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `access_questionbank` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `access_subjects` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `access_groups` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `access_users` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `access_visitors` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `access_config` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `groupid`                INT(10) UNSIGNED    NOT NULL AUTO_INCREMENT,
+  `group_name`             VARCHAR(512)        NOT NULL DEFAULT '',
+  `group_description`      VARCHAR(1024)       NOT NULL DEFAULT '',
+  `access_tests`           TINYINT(3) UNSIGNED NOT NULL DEFAULT '1',
+  `access_testmanager`     TINYINT(3) UNSIGNED NOT NULL DEFAULT '0',
+  `access_gradingsystems`  TINYINT(3) UNSIGNED NOT NULL DEFAULT '0',
+  `access_emailtemplates`  TINYINT(3) UNSIGNED NOT NULL DEFAULT '0',
+  `access_reporttemplates` TINYINT(3) UNSIGNED NOT NULL DEFAULT '0',
+  `access_reportsmanager`  TINYINT(3) UNSIGNED NOT NULL DEFAULT '0',
+  `access_questionbank`    TINYINT(3) UNSIGNED NOT NULL DEFAULT '0',
+  `access_subjects`        TINYINT(3) UNSIGNED NOT NULL DEFAULT '0',
+  `access_groups`          TINYINT(3) UNSIGNED NOT NULL DEFAULT '0',
+  `access_users`           TINYINT(3) UNSIGNED NOT NULL DEFAULT '0',
+  `access_visitors`        TINYINT(3) UNSIGNED NOT NULL DEFAULT '0',
+  `access_config`          TINYINT(3) UNSIGNED NOT NULL DEFAULT '0',
   PRIMARY KEY (`groupid`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+)
+  ENGINE =MyISAM
+  DEFAULT CHARSET =utf8;
 
 -- --------------------------------------------------------
 
@@ -197,11 +205,13 @@ CREATE TABLE IF NOT EXISTS `kkztgroups` (
 --
 
 CREATE TABLE IF NOT EXISTS `kkztgroups_tests` (
-  `groupid` int(10) unsigned NOT NULL DEFAULT '0',
-  `testid` int(10) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`groupid`,`testid`),
+  `groupid` INT(10) UNSIGNED NOT NULL DEFAULT '0',
+  `testid`  INT(10) UNSIGNED NOT NULL DEFAULT '0',
+  PRIMARY KEY (`groupid`, `testid`),
   KEY `groupid` (`groupid`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+)
+  ENGINE =MyISAM
+  DEFAULT CHARSET =utf8;
 
 -- --------------------------------------------------------
 
@@ -210,10 +220,12 @@ CREATE TABLE IF NOT EXISTS `kkztgroups_tests` (
 --
 
 CREATE TABLE IF NOT EXISTS `kkztgroups_users` (
-  `groupid` int(10) unsigned NOT NULL DEFAULT '0',
-  `userid` int(10) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`groupid`,`userid`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  `groupid` INT(10) UNSIGNED NOT NULL DEFAULT '0',
+  `userid`  INT(10) UNSIGNED NOT NULL DEFAULT '0',
+  PRIMARY KEY (`groupid`, `userid`)
+)
+  ENGINE =MyISAM
+  DEFAULT CHARSET =utf8;
 
 -- --------------------------------------------------------
 
@@ -222,11 +234,13 @@ CREATE TABLE IF NOT EXISTS `kkztgroups_users` (
 --
 
 CREATE TABLE IF NOT EXISTS `kkztgscales` (
-  `gscaleid` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `gscale_name` varchar(1024) NOT NULL DEFAULT '',
-  `gscale_description` varchar(1024) NOT NULL DEFAULT '',
+  `gscaleid`           INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `gscale_name`        VARCHAR(1024)    NOT NULL DEFAULT '',
+  `gscale_description` VARCHAR(1024)    NOT NULL DEFAULT '',
   PRIMARY KEY (`gscaleid`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+)
+  ENGINE =MyISAM
+  DEFAULT CHARSET =utf8;
 
 -- --------------------------------------------------------
 
@@ -235,15 +249,17 @@ CREATE TABLE IF NOT EXISTS `kkztgscales` (
 --
 
 CREATE TABLE IF NOT EXISTS `kkztgscales_grades` (
-  `gscaleid` int(10) unsigned NOT NULL DEFAULT '0',
-  `gscale_gradeid` int(10) unsigned NOT NULL DEFAULT '0',
-  `grade_name` varchar(1024) NOT NULL DEFAULT '',
-  `grade_description` varchar(1024) NOT NULL DEFAULT '',
-  `grade_from` float NOT NULL DEFAULT '0',
-  `grade_to` float NOT NULL DEFAULT '0',
-  `isabsolute` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`gscaleid`,`gscale_gradeid`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  `gscaleid`          INT(10) UNSIGNED    NOT NULL DEFAULT '0',
+  `gscale_gradeid`    INT(10) UNSIGNED    NOT NULL DEFAULT '0',
+  `grade_name`        VARCHAR(1024)       NOT NULL DEFAULT '',
+  `grade_description` VARCHAR(1024)       NOT NULL DEFAULT '',
+  `grade_from`        FLOAT               NOT NULL DEFAULT '0',
+  `grade_to`          FLOAT               NOT NULL DEFAULT '0',
+  `isabsolute`        TINYINT(3) UNSIGNED NOT NULL DEFAULT '0',
+  PRIMARY KEY (`gscaleid`, `gscale_gradeid`)
+)
+  ENGINE =MyISAM
+  DEFAULT CHARSET =utf8;
 
 -- --------------------------------------------------------
 
@@ -252,21 +268,23 @@ CREATE TABLE IF NOT EXISTS `kkztgscales_grades` (
 --
 
 CREATE TABLE IF NOT EXISTS `kkztquestions` (
-  `questionid` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `subjectid` int(10) unsigned NOT NULL DEFAULT '1',
-  `question_time` int(10) unsigned NOT NULL DEFAULT '0',
-  `question_pre` text NOT NULL,
-  `question_post` text NOT NULL,
-  `question_text` text NOT NULL,
-  `question_points` tinyint(4) NOT NULL DEFAULT '1',
-  `question_solution` text NOT NULL,
-  `question_type` int(10) unsigned NOT NULL DEFAULT '0',
-  `question_upper` int(1) NOT NULL DEFAULT '1',
-  `question_spaces` int(1) NOT NULL DEFAULT '1',
-  `question_2spaces` int(1) NOT NULL DEFAULT '1',
-  `question_comas` int(1) NOT NULL DEFAULT '1',
+  `questionid`        INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `subjectid`         INT(10) UNSIGNED NOT NULL DEFAULT '1',
+  `question_time`     INT(10) UNSIGNED NOT NULL DEFAULT '0',
+  `question_pre`      TEXT             NOT NULL,
+  `question_post`     TEXT             NOT NULL,
+  `question_text`     TEXT             NOT NULL,
+  `question_points`   TINYINT(4)       NOT NULL DEFAULT '1',
+  `question_solution` TEXT             NOT NULL,
+  `question_type`     INT(10) UNSIGNED NOT NULL DEFAULT '0',
+  `question_upper`    INT(1)           NOT NULL DEFAULT '1',
+  `question_spaces`   INT(1)           NOT NULL DEFAULT '1',
+  `question_2spaces`  INT(1)           NOT NULL DEFAULT '1',
+  `question_comas`    INT(1)           NOT NULL DEFAULT '1',
   PRIMARY KEY (`questionid`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+)
+  ENGINE =MyISAM
+  DEFAULT CHARSET =utf8;
 
 -- --------------------------------------------------------
 
@@ -275,21 +293,23 @@ CREATE TABLE IF NOT EXISTS `kkztquestions` (
 --
 
 CREATE TABLE IF NOT EXISTS `kkztresults` (
-  `resultid` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `testid` int(10) unsigned NOT NULL DEFAULT '0',
-  `userid` int(10) unsigned NOT NULL DEFAULT '0',
-  `result_datestart` int(10) unsigned NOT NULL DEFAULT '0',
-  `result_lastact` int(10) NOT NULL DEFAULT '0',
-  `result_timespent` int(10) unsigned NOT NULL DEFAULT '0',
-  `result_timeexceeded` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `result_points` int(11) NOT NULL DEFAULT '0',
-  `result_pointsmax` int(11) NOT NULL DEFAULT '0',
-  `gscaleid` int(10) unsigned NOT NULL DEFAULT '1',
-  `gscale_gradeid` int(10) unsigned NOT NULL DEFAULT '0',
+  `resultid`            INT(10) UNSIGNED    NOT NULL AUTO_INCREMENT,
+  `testid`              INT(10) UNSIGNED    NOT NULL DEFAULT '0',
+  `userid`              INT(10) UNSIGNED    NOT NULL DEFAULT '0',
+  `result_datestart`    INT(10) UNSIGNED    NOT NULL DEFAULT '0',
+  `result_lastact`      INT(10)             NOT NULL DEFAULT '0',
+  `result_timespent`    INT(10) UNSIGNED    NOT NULL DEFAULT '0',
+  `result_timeexceeded` TINYINT(3) UNSIGNED NOT NULL DEFAULT '0',
+  `result_points`       INT(11)             NOT NULL DEFAULT '0',
+  `result_pointsmax`    INT(11)             NOT NULL DEFAULT '0',
+  `gscaleid`            INT(10) UNSIGNED    NOT NULL DEFAULT '1',
+  `gscale_gradeid`      INT(10) UNSIGNED    NOT NULL DEFAULT '0',
   PRIMARY KEY (`resultid`),
   KEY `test` (`testid`),
   KEY `user` (`userid`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+)
+  ENGINE =MyISAM
+  DEFAULT CHARSET =utf8;
 
 -- --------------------------------------------------------
 
@@ -298,19 +318,21 @@ CREATE TABLE IF NOT EXISTS `kkztresults` (
 --
 
 CREATE TABLE IF NOT EXISTS `kkztresults_answers` (
-  `result_answerid` int(10) unsigned NOT NULL DEFAULT '0',
-  `resultid` int(10) unsigned NOT NULL DEFAULT '0',
-  `questionid` int(10) unsigned NOT NULL DEFAULT '0',
-  `test_questionid` int(10) unsigned NOT NULL DEFAULT '0',
-  `result_answer_text` text NOT NULL,
-  `result_answer_points` tinyint(4) NOT NULL DEFAULT '0',
-  `result_answer_iscorrect` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `result_answer_feedback` text NOT NULL,
-  `result_answer_timespent` int(10) unsigned NOT NULL DEFAULT '0',
-  `result_answer_timeexceeded` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`resultid`,`result_answerid`),
+  `result_answerid`            INT(10) UNSIGNED    NOT NULL DEFAULT '0',
+  `resultid`                   INT(10) UNSIGNED    NOT NULL DEFAULT '0',
+  `questionid`                 INT(10) UNSIGNED    NOT NULL DEFAULT '0',
+  `test_questionid`            INT(10) UNSIGNED    NOT NULL DEFAULT '0',
+  `result_answer_text`         TEXT                NOT NULL,
+  `result_answer_points`       TINYINT(4)          NOT NULL DEFAULT '0',
+  `result_answer_iscorrect`    TINYINT(3) UNSIGNED NOT NULL DEFAULT '0',
+  `result_answer_feedback`     TEXT                NOT NULL,
+  `result_answer_timespent`    INT(10) UNSIGNED    NOT NULL DEFAULT '0',
+  `result_answer_timeexceeded` TINYINT(3) UNSIGNED NOT NULL DEFAULT '0',
+  PRIMARY KEY (`resultid`, `result_answerid`),
   KEY `questionid` (`questionid`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+)
+  ENGINE =MyISAM
+  DEFAULT CHARSET =utf8;
 
 -- --------------------------------------------------------
 
@@ -319,12 +341,14 @@ CREATE TABLE IF NOT EXISTS `kkztresults_answers` (
 --
 
 CREATE TABLE IF NOT EXISTS `kkztrtemplates` (
-  `rtemplateid` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `rtemplate_name` varchar(512) NOT NULL,
-  `rtemplate_description` varchar(512) NOT NULL,
-  `rtemplate_body` longtext NOT NULL,
+  `rtemplateid`           INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `rtemplate_name`        VARCHAR(512)     NOT NULL,
+  `rtemplate_description` VARCHAR(512)     NOT NULL,
+  `rtemplate_body`        LONGTEXT         NOT NULL,
   PRIMARY KEY (`rtemplateid`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+)
+  ENGINE =MyISAM
+  DEFAULT CHARSET =utf8;
 
 -- --------------------------------------------------------
 
@@ -333,11 +357,13 @@ CREATE TABLE IF NOT EXISTS `kkztrtemplates` (
 --
 
 CREATE TABLE IF NOT EXISTS `kkztsubjects` (
-  `subjectid` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `subject_name` varchar(1024) NOT NULL DEFAULT '',
-  `subject_description` varchar(1024) NOT NULL DEFAULT '',
+  `subjectid`           INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `subject_name`        VARCHAR(1024)    NOT NULL DEFAULT '',
+  `subject_description` VARCHAR(1024)    NOT NULL DEFAULT '',
   PRIMARY KEY (`subjectid`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+)
+  ENGINE =MyISAM
+  DEFAULT CHARSET =utf8;
 
 -- --------------------------------------------------------
 
@@ -346,40 +372,42 @@ CREATE TABLE IF NOT EXISTS `kkztsubjects` (
 --
 
 CREATE TABLE IF NOT EXISTS `kkzttests` (
-  `testid` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `subjectid` int(10) unsigned NOT NULL DEFAULT '1',
-  `rtemplateid` int(10) unsigned NOT NULL DEFAULT '1',
-  `result_etemplateid` int(10) unsigned NOT NULL DEFAULT '0',
-  `gscaleid` int(10) unsigned NOT NULL DEFAULT '1',
-  `test_name` varchar(1024) NOT NULL DEFAULT '',
-  `test_description` varchar(2048) NOT NULL DEFAULT '',
-  `test_instructions` text NOT NULL,
-  `test_time` int(10) unsigned NOT NULL DEFAULT '0',
-  `test_timeforceout` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `test_timingq` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `test_attempts` int(10) unsigned NOT NULL DEFAULT '0',
-  `test_shuffleq` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `test_shufflea` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `test_sectionstype` int(10) unsigned NOT NULL DEFAULT '0',
-  `test_qsperpage` tinyint(3) unsigned NOT NULL DEFAULT '1',
-  `test_showqfeedback` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `test_result_showanswers` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `test_result_showpoints` tinyint(3) unsigned NOT NULL DEFAULT '1',
-  `test_result_showgrade` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `test_result_showpdf` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `test_reportgradecondition` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `test_result_email` varbinary(255) NOT NULL DEFAULT '',
-  `test_result_emailtouser` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `test_datestart` int(10) unsigned NOT NULL DEFAULT '0',
-  `test_dateend` int(10) unsigned NOT NULL DEFAULT '0',
-  `test_notes` text NOT NULL,
-  `test_forall` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `test_createdate` int(10) unsigned NOT NULL DEFAULT '0',
-  `test_enabled` tinyint(3) unsigned NOT NULL DEFAULT '1',
-  `test_internet` tinyint(1) NOT NULL DEFAULT '0',
+  `testid`                    INT(10) UNSIGNED    NOT NULL AUTO_INCREMENT,
+  `subjectid`                 INT(10) UNSIGNED    NOT NULL DEFAULT '1',
+  `rtemplateid`               INT(10) UNSIGNED    NOT NULL DEFAULT '1',
+  `result_etemplateid`        INT(10) UNSIGNED    NOT NULL DEFAULT '0',
+  `gscaleid`                  INT(10) UNSIGNED    NOT NULL DEFAULT '1',
+  `test_name`                 VARCHAR(1024)       NOT NULL DEFAULT '',
+  `test_description`          VARCHAR(2048)       NOT NULL DEFAULT '',
+  `test_instructions`         TEXT                NOT NULL,
+  `test_time`                 INT(10) UNSIGNED    NOT NULL DEFAULT '0',
+  `test_timeforceout`         TINYINT(3) UNSIGNED NOT NULL DEFAULT '0',
+  `test_timingq`              TINYINT(3) UNSIGNED NOT NULL DEFAULT '0',
+  `test_attempts`             INT(10) UNSIGNED    NOT NULL DEFAULT '0',
+  `test_shuffleq`             TINYINT(3) UNSIGNED NOT NULL DEFAULT '0',
+  `test_shufflea`             TINYINT(3) UNSIGNED NOT NULL DEFAULT '0',
+  `test_sectionstype`         INT(10) UNSIGNED    NOT NULL DEFAULT '0',
+  `test_qsperpage`            TINYINT(3) UNSIGNED NOT NULL DEFAULT '1',
+  `test_showqfeedback`        TINYINT(3) UNSIGNED NOT NULL DEFAULT '0',
+  `test_result_showanswers`   TINYINT(3) UNSIGNED NOT NULL DEFAULT '0',
+  `test_result_showpoints`    TINYINT(3) UNSIGNED NOT NULL DEFAULT '1',
+  `test_result_showgrade`     TINYINT(3) UNSIGNED NOT NULL DEFAULT '0',
+  `test_result_showpdf`       TINYINT(3) UNSIGNED NOT NULL DEFAULT '0',
+  `test_reportgradecondition` TINYINT(3) UNSIGNED NOT NULL DEFAULT '0',
+  `test_result_email`         VARBINARY(255)      NOT NULL DEFAULT '',
+  `test_result_emailtouser`   TINYINT(3) UNSIGNED NOT NULL DEFAULT '0',
+  `test_datestart`            INT(10) UNSIGNED    NOT NULL DEFAULT '0',
+  `test_dateend`              INT(10) UNSIGNED    NOT NULL DEFAULT '0',
+  `test_notes`                TEXT                NOT NULL,
+  `test_forall`               TINYINT(3) UNSIGNED NOT NULL DEFAULT '0',
+  `test_createdate`           INT(10) UNSIGNED    NOT NULL DEFAULT '0',
+  `test_enabled`              TINYINT(3) UNSIGNED NOT NULL DEFAULT '1',
+  `test_internet`             TINYINT(1)          NOT NULL DEFAULT '0',
   PRIMARY KEY (`testid`),
   KEY `subjectid` (`subjectid`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+)
+  ENGINE =MyISAM
+  DEFAULT CHARSET =utf8;
 
 -- --------------------------------------------------------
 
@@ -388,11 +416,13 @@ CREATE TABLE IF NOT EXISTS `kkzttests` (
 --
 
 CREATE TABLE IF NOT EXISTS `kkzttests_attempts` (
-  `testid` int(10) unsigned NOT NULL DEFAULT '0',
-  `userid` int(10) unsigned NOT NULL DEFAULT '0',
-  `test_attempt_count` int(10) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`testid`,`userid`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  `testid`             INT(10) UNSIGNED NOT NULL DEFAULT '0',
+  `userid`             INT(10) UNSIGNED NOT NULL DEFAULT '0',
+  `test_attempt_count` INT(10) UNSIGNED NOT NULL DEFAULT '0',
+  PRIMARY KEY (`testid`, `userid`)
+)
+  ENGINE =MyISAM
+  DEFAULT CHARSET =utf8;
 
 -- --------------------------------------------------------
 
@@ -401,11 +431,13 @@ CREATE TABLE IF NOT EXISTS `kkzttests_attempts` (
 --
 
 CREATE TABLE IF NOT EXISTS `kkzttests_questions` (
-  `test_questionid` int(10) unsigned NOT NULL DEFAULT '0',
-  `testid` int(10) unsigned NOT NULL DEFAULT '0',
-  `questionid` int(10) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`testid`,`test_questionid`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  `test_questionid` INT(10) UNSIGNED NOT NULL DEFAULT '0',
+  `testid`          INT(10) UNSIGNED NOT NULL DEFAULT '0',
+  `questionid`      INT(10) UNSIGNED NOT NULL DEFAULT '0',
+  PRIMARY KEY (`testid`, `test_questionid`)
+)
+  ENGINE =MyISAM
+  DEFAULT CHARSET =utf8;
 
 -- --------------------------------------------------------
 
@@ -414,67 +446,69 @@ CREATE TABLE IF NOT EXISTS `kkzttests_questions` (
 --
 
 CREATE TABLE IF NOT EXISTS `kkztusers` (
-  `userid` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `user_name` varchar(512) NOT NULL DEFAULT '',
-  `user_passhash` varbinary(32) NOT NULL DEFAULT '',
-  `user_email` varchar(512) NOT NULL DEFAULT '',
-  `user_title` varbinary(32) NOT NULL DEFAULT '',
-  `user_firstname` varchar(512) NOT NULL DEFAULT '',
-  `user_lastname` varchar(512) NOT NULL DEFAULT '',
-  `user_middlename` varchar(512) NOT NULL DEFAULT '',
-  `user_address` blob NOT NULL,
-  `user_city` varbinary(255) NOT NULL DEFAULT '',
-  `user_state` varbinary(255) NOT NULL DEFAULT '',
-  `user_zip` varbinary(255) NOT NULL DEFAULT '',
-  `user_country` varbinary(255) NOT NULL DEFAULT '',
-  `user_phone` varbinary(255) NOT NULL DEFAULT '',
-  `user_fax` varbinary(255) NOT NULL DEFAULT '',
-  `user_mobile` varbinary(255) NOT NULL DEFAULT '',
-  `user_pager` varbinary(255) NOT NULL DEFAULT '',
-  `user_ipphone` varbinary(255) NOT NULL DEFAULT '',
-  `user_webpage` varbinary(255) NOT NULL DEFAULT '',
-  `user_icq` varbinary(255) NOT NULL DEFAULT '',
-  `user_msn` varbinary(255) NOT NULL DEFAULT '',
-  `user_aol` varbinary(255) NOT NULL DEFAULT '',
-  `user_gender` tinyint(4) NOT NULL DEFAULT '0',
-  `user_birthday` datetime DEFAULT NULL,
-  `user_husbandwife` varbinary(255) NOT NULL DEFAULT '',
-  `user_children` varbinary(255) NOT NULL DEFAULT '',
-  `user_trainer` varbinary(255) NOT NULL DEFAULT '',
-  `user_photo` varbinary(255) NOT NULL DEFAULT '',
-  `user_company` varbinary(255) NOT NULL DEFAULT '',
-  `user_cposition` varbinary(255) NOT NULL DEFAULT '',
-  `user_department` varbinary(255) NOT NULL DEFAULT '',
-  `user_coffice` varbinary(255) NOT NULL DEFAULT '',
-  `user_caddress` blob NOT NULL,
-  `user_ccity` varbinary(255) NOT NULL DEFAULT '',
-  `user_cstate` varbinary(255) NOT NULL DEFAULT '',
-  `user_czip` varbinary(255) NOT NULL DEFAULT '',
-  `user_ccountry` varbinary(255) NOT NULL DEFAULT '',
-  `user_cphone` varbinary(255) NOT NULL DEFAULT '',
-  `user_cfax` varbinary(255) NOT NULL DEFAULT '',
-  `user_cmobile` varbinary(255) NOT NULL DEFAULT '',
-  `user_cpager` varbinary(255) NOT NULL DEFAULT '',
-  `user_cipphone` varbinary(255) NOT NULL DEFAULT '',
-  `user_cwebpage` varbinary(255) NOT NULL DEFAULT '',
-  `user_cphoto` varbinary(255) NOT NULL DEFAULT '',
-  `user_ufield1` blob NOT NULL,
-  `user_ufield2` blob NOT NULL,
-  `user_ufield3` blob NOT NULL,
-  `user_ufield4` blob NOT NULL,
-  `user_ufield5` blob NOT NULL,
-  `user_ufield6` blob NOT NULL,
-  `user_ufield7` blob NOT NULL,
-  `user_ufield8` blob NOT NULL,
-  `user_ufield9` blob NOT NULL,
-  `user_ufield10` blob NOT NULL,
-  `user_notes` blob NOT NULL,
-  `user_joindate` int(10) unsigned NOT NULL DEFAULT '0',
-  `user_logindate` int(10) unsigned NOT NULL DEFAULT '0',
-  `user_expiredate` int(10) unsigned NOT NULL DEFAULT '0',
-  `user_enabled` tinyint(3) unsigned NOT NULL DEFAULT '1',
+  `userid`           INT(10) UNSIGNED    NOT NULL AUTO_INCREMENT,
+  `user_name`        VARCHAR(512)        NOT NULL DEFAULT '',
+  `user_passhash`    VARBINARY(32)       NOT NULL DEFAULT '',
+  `user_email`       VARCHAR(512)        NOT NULL DEFAULT '',
+  `user_title`       VARBINARY(32)       NOT NULL DEFAULT '',
+  `user_firstname`   VARCHAR(512)        NOT NULL DEFAULT '',
+  `user_lastname`    VARCHAR(512)        NOT NULL DEFAULT '',
+  `user_middlename`  VARCHAR(512)        NOT NULL DEFAULT '',
+  `user_address`     BLOB                NOT NULL,
+  `user_city`        VARBINARY(255)      NOT NULL DEFAULT '',
+  `user_state`       VARBINARY(255)      NOT NULL DEFAULT '',
+  `user_zip`         VARBINARY(255)      NOT NULL DEFAULT '',
+  `user_country`     VARBINARY(255)      NOT NULL DEFAULT '',
+  `user_phone`       VARBINARY(255)      NOT NULL DEFAULT '',
+  `user_fax`         VARBINARY(255)      NOT NULL DEFAULT '',
+  `user_mobile`      VARBINARY(255)      NOT NULL DEFAULT '',
+  `user_pager`       VARBINARY(255)      NOT NULL DEFAULT '',
+  `user_ipphone`     VARBINARY(255)      NOT NULL DEFAULT '',
+  `user_webpage`     VARBINARY(255)      NOT NULL DEFAULT '',
+  `user_icq`         VARBINARY(255)      NOT NULL DEFAULT '',
+  `user_msn`         VARBINARY(255)      NOT NULL DEFAULT '',
+  `user_aol`         VARBINARY(255)      NOT NULL DEFAULT '',
+  `user_gender`      TINYINT(4)          NOT NULL DEFAULT '0',
+  `user_birthday`    DATETIME DEFAULT NULL,
+  `user_husbandwife` VARBINARY(255)      NOT NULL DEFAULT '',
+  `user_children`    VARBINARY(255)      NOT NULL DEFAULT '',
+  `user_trainer`     VARBINARY(255)      NOT NULL DEFAULT '',
+  `user_photo`       VARBINARY(255)      NOT NULL DEFAULT '',
+  `user_company`     VARBINARY(255)      NOT NULL DEFAULT '',
+  `user_cposition`   VARBINARY(255)      NOT NULL DEFAULT '',
+  `user_department`  VARBINARY(255)      NOT NULL DEFAULT '',
+  `user_coffice`     VARBINARY(255)      NOT NULL DEFAULT '',
+  `user_caddress`    BLOB                NOT NULL,
+  `user_ccity`       VARBINARY(255)      NOT NULL DEFAULT '',
+  `user_cstate`      VARBINARY(255)      NOT NULL DEFAULT '',
+  `user_czip`        VARBINARY(255)      NOT NULL DEFAULT '',
+  `user_ccountry`    VARBINARY(255)      NOT NULL DEFAULT '',
+  `user_cphone`      VARBINARY(255)      NOT NULL DEFAULT '',
+  `user_cfax`        VARBINARY(255)      NOT NULL DEFAULT '',
+  `user_cmobile`     VARBINARY(255)      NOT NULL DEFAULT '',
+  `user_cpager`      VARBINARY(255)      NOT NULL DEFAULT '',
+  `user_cipphone`    VARBINARY(255)      NOT NULL DEFAULT '',
+  `user_cwebpage`    VARBINARY(255)      NOT NULL DEFAULT '',
+  `user_cphoto`      VARBINARY(255)      NOT NULL DEFAULT '',
+  `user_ufield1`     BLOB                NOT NULL,
+  `user_ufield2`     BLOB                NOT NULL,
+  `user_ufield3`     BLOB                NOT NULL,
+  `user_ufield4`     BLOB                NOT NULL,
+  `user_ufield5`     BLOB                NOT NULL,
+  `user_ufield6`     BLOB                NOT NULL,
+  `user_ufield7`     BLOB                NOT NULL,
+  `user_ufield8`     BLOB                NOT NULL,
+  `user_ufield9`     BLOB                NOT NULL,
+  `user_ufield10`    BLOB                NOT NULL,
+  `user_notes`       BLOB                NOT NULL,
+  `user_joindate`    INT(10) UNSIGNED    NOT NULL DEFAULT '0',
+  `user_logindate`   INT(10) UNSIGNED    NOT NULL DEFAULT '0',
+  `user_expiredate`  INT(10) UNSIGNED    NOT NULL DEFAULT '0',
+  `user_enabled`     TINYINT(3) UNSIGNED NOT NULL DEFAULT '1',
   PRIMARY KEY (`userid`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+)
+  ENGINE =MyISAM
+  DEFAULT CHARSET =utf8;
 
 -- --------------------------------------------------------
 
@@ -483,23 +517,38 @@ CREATE TABLE IF NOT EXISTS `kkztusers` (
 --
 
 CREATE TABLE IF NOT EXISTS `kkztvisitors` (
-  `visitorid` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `startdate` int(10) unsigned NOT NULL DEFAULT '0',
-  `enddate` int(10) unsigned NOT NULL DEFAULT '0',
-  `userid` int(10) unsigned NOT NULL DEFAULT '0',
-  `ip1` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `ip2` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `ip3` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `ip4` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `host` varbinary(100) NOT NULL DEFAULT '',
-  `referer` varbinary(255) NOT NULL DEFAULT '',
-  `useragent` varbinary(255) NOT NULL DEFAULT '',
-  `hits` int(10) unsigned NOT NULL DEFAULT '0',
-  `inurl` varbinary(255) NOT NULL DEFAULT '',
-  `outurl` varbinary(255) NOT NULL DEFAULT '',
+  `visitorid` INT(10) UNSIGNED    NOT NULL AUTO_INCREMENT,
+  `startdate` INT(10) UNSIGNED    NOT NULL DEFAULT '0',
+  `enddate`   INT(10) UNSIGNED    NOT NULL DEFAULT '0',
+  `userid`    INT(10) UNSIGNED    NOT NULL DEFAULT '0',
+  `ip1`       TINYINT(3) UNSIGNED NOT NULL DEFAULT '0',
+  `ip2`       TINYINT(3) UNSIGNED NOT NULL DEFAULT '0',
+  `ip3`       TINYINT(3) UNSIGNED NOT NULL DEFAULT '0',
+  `ip4`       TINYINT(3) UNSIGNED NOT NULL DEFAULT '0',
+  `host`      VARBINARY(100)      NOT NULL DEFAULT '',
+  `referer`   VARBINARY(255)      NOT NULL DEFAULT '',
+  `useragent` VARBINARY(255)      NOT NULL DEFAULT '',
+  `hits`      INT(10) UNSIGNED    NOT NULL DEFAULT '0',
+  `inurl`     VARBINARY(255)      NOT NULL DEFAULT '',
+  `outurl`    VARBINARY(255)      NOT NULL DEFAULT '',
   PRIMARY KEY (`visitorid`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+)
+  ENGINE =MyISAM
+  DEFAULT CHARSET =utf8;
 
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+--
+-- Структура таблицы `kkztconfig`
+--
+
+CREATE TABLE IF NOT EXISTS `kkztusersessions` (
+  `id`     INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `user_id` INT(10) UNSIGNED NOT NULL DEFAULT '0',
+  `testid` INT(10) UNSIGNED NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+)
+  ENGINE =MyISAM
+  DEFAULT CHARSET =utf8;
+
+/*!40101 SET CHARACTER_SET_CLIENT = @OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS = @OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION = @OLD_COLLATION_CONNECTION */;

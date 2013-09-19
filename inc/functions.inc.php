@@ -1,6 +1,7 @@
 <?php
 
-function utf8_to_cp1251($txt) {
+function utf8_to_cp1251($txt)
+{
     /*
       $in_arr = array(chr(208), chr(192), chr(193), chr(194), chr(195), chr(196), chr
       (197), chr(168), chr(198), chr(199), chr(200), chr(201), chr(202), chr(203), chr
@@ -36,19 +37,23 @@ function utf8_to_cp1251($txt) {
     return $txt;
 }
 
-function readPostVar($i_name, $i_default = '') {
+function readPostVar($i_name, $i_default = '')
+{
     return isset($_POST [$i_name]) ? $_POST [$i_name] : $i_default;
 }
 
-function send_email($i_email_to, $i_email_subject, $i_email_body, $i_email_headers) {
+function send_email($i_email_to, $i_email_subject, $i_email_body, $i_email_headers)
+{
     @mail($i_email_to, $i_email_subject, $i_email_body, $i_email_headers);
 }
 
-function readGetVar($i_name) {
+function readGetVar($i_name)
+{
     return isset($_GET [$i_name]) ? $_GET [$i_name] : "";
 }
 
-function writeErrorsWarningsBar() {
+function writeErrorsWarningsBar()
+{
     global $input_err_msg, $input_inf_msg;
     if (isset($input_err_msg) && $input_err_msg)
         echo '<p><b><font color="#cc0000">' . $input_err_msg . '</font></b>';
@@ -56,10 +61,11 @@ function writeErrorsWarningsBar() {
         echo '<p><b><font color="#006000">' . $input_inf_msg . '</font></b>';
 }
 
-function getConfigItem($i_id) {
+function getConfigItem($i_id)
+{
     global $g_db, $srv_settings;
     $i_result = null;
-    $i_rSet1 = $g_db->SelectLimit("SELECT config_value FROM " . $srv_settings ['table_prefix'] . "config WHERE configid=" . (int) $i_id, 1);
+    $i_rSet1 = $g_db->SelectLimit("SELECT config_value FROM " . $srv_settings ['table_prefix'] . "config WHERE configid=" . (int)$i_id, 1);
     if ($i_rSet1) {
         if (!$i_rSet1->EOF) {
             $i_result = $i_rSet1->fields ["config_value"];
@@ -68,31 +74,36 @@ function getConfigItem($i_id) {
     return $i_result;
 }
 
-function setConfigItem($i_id, $i_value) {
+function setConfigItem($i_id, $i_value)
+{
     global $g_db, $srv_settings;
-    $i_value = $g_db->qstr((string) $i_value, get_magic_quotes_gpc());
-    return $g_db->Execute("UPDATE " . $srv_settings ['table_prefix'] . "config SET config_value=" . $i_value . " WHERE configid=" . (int) $i_id);
+    $i_value = $g_db->qstr((string)$i_value, get_magic_quotes_gpc());
+    return $g_db->Execute("UPDATE " . $srv_settings ['table_prefix'] . "config SET config_value=" . $i_value . " WHERE configid=" . (int)$i_id);
 }
 
-function showError($i_filename, $i_text) {
+function showError($i_filename, $i_text)
+{
     global $g_db;
     exit("Error: " . $i_text . " (" . basename($i_filename) . ")");
 }
 
-function showDBError($i_filename, $i_lineno) {
+function showDBError($i_filename, $i_lineno)
+{
     global $g_db;
 
     exit("Error: " . basename($i_filename) . ", SQL request error #" . $i_lineno . " " . $g_db->ErrorMsg());
 }
 
-function gotoLocation($i_url) {
+function gotoLocation($i_url)
+{
     session_write_close();
     header('Location: ' . $i_url);
 }
 
-function getAutoPassword($i_length) {
+function getAutoPassword($i_length)
+{
     $salt = "abchefghjkmnpqrstuvwxyz0123456789";
-    srand((double) microtime() * 1000000);
+    srand((double)microtime() * 1000000);
     $pass = "";
     $i = 0;
     while ($i < $i_length) {
@@ -104,19 +115,21 @@ function getAutoPassword($i_length) {
     return $pass;
 }
 
-function getRecordCount($i_table, $i_where = '') {
+function getRecordCount($i_table, $i_where = '')
+{
     global $g_db;
     $i_recordcount = 0;
     $i_rSet1 = $g_db->Execute("SELECT COUNT(*) as CROWS FROM " . $i_table . (($i_where != '') ? " WHERE " . $i_where : ''));
     if ($i_rSet1) {
         if (!$i_rSet1->EOF)
-            $i_recordcount = (int) $i_rSet1->fields ['CROWS'];
+            $i_recordcount = (int)$i_rSet1->fields ['CROWS'];
         $i_rSet1->Close();
     }
     return $i_recordcount;
 }
 
-function getAutoUsername($i_startfrom) {
+function getAutoUsername($i_startfrom)
+{
     global $g_db;
 
     $i_duplicates = 0;
@@ -128,23 +141,28 @@ function getAutoUsername($i_startfrom) {
     return $i_username;
 }
 
-function convertTextValue($text) {
+function convertTextValue($text)
+{
     return isset($text) ? htmlspecialchars($text) : "";
 }
 
-function writeATag($url, $content, $other = "") {
+function writeATag($url, $content, $other = "")
+{
     echo '<a href="' . $url . '"' . $other . '>' . convertTextValue($content) . '</a>';
 }
 
-function writeTR2($i_column1, $i_column2) {
+function writeTR2($i_column1, $i_column2)
+{
     echo getTR(array($i_column1, $i_column2));
 }
 
-function writeTR2Fixed($i_column1, $i_column2) {
+function writeTR2Fixed($i_column1, $i_column2)
+{
     echo getTR(array($i_column1, $i_column2), array(' width="30%"', ' width="70%"'));
 }
 
-function getTR($i_columns, $i_addonses = array()) {
+function getTR($i_columns, $i_addonses = array())
+{
     global $i_rowno;
     $i_rownotext = ($i_rowno = ++$i_rowno % 2) ? "rowtwo" : "rowone";
     $i_result = '';
@@ -155,7 +173,8 @@ function getTR($i_columns, $i_addonses = array()) {
     return $i_result;
 }
 
-function getSelectElement($i_name, $i_value, $i_values, $i_additional = '') {
+function getSelectElement($i_name, $i_value, $i_values, $i_additional = '')
+{
     $i_result = "";
     $i_result .= '<select class=inp name="' . $i_name . '" id="' . $i_name . '"' . $i_additional . '>';
     foreach ($i_values as $key => $option)
@@ -164,14 +183,16 @@ function getSelectElement($i_name, $i_value, $i_values, $i_additional = '') {
     return $i_result;
 }
 
-function convertTextAreaHTML($i_state, $i_text) {
+function convertTextAreaHTML($i_state, $i_text)
+{
     if ($i_state)
         return str_replace("  ", " &nbsp;", str_replace("\r", "", str_replace("\n", "<br />", $i_text)));
     else
         return str_replace("&nbsp;", " ", str_replace("\r", "", str_replace("<br>", "\n", str_replace("<br />", "\n", $i_text))));
 }
 
-function initTextEditor($i_type = 1, $i_names = array('oEdit1')) {
+function initTextEditor($i_type = 1, $i_names = array('oEdit1'))
+{
     global $srv_settings, $lngstr, $page_meta, $page_body_tag, $DOCUMENT_ROOT;
     switch ($i_type) {
         case CONFIG_CONST_htmlareaeditor :
@@ -232,11 +253,13 @@ editor.generate();
     }
 }
 
-function getJSComplaintText($i_text) {
+function getJSComplaintText($i_text)
+{
     return str_replace('"', '\"', str_replace("\r", "", str_replace("\n", " ", $i_text)));
 }
 
-function getTextEditor($i_type, $i_name, $i_value, $i_rows = 15, $i_cols = 50, $i_addon = '') {
+function getTextEditor($i_type, $i_name, $i_value, $i_rows = 15, $i_cols = 50, $i_addon = '')
+{
     global $srv_settings, $lngstr;
     switch ($i_type) {
         case 0 :
@@ -283,18 +306,18 @@ function getTextEditor($i_type, $i_name, $i_value, $i_rows = 15, $i_cols = 50, $
             $CKEditor->config['removePlugins'] = 'elementspath';
             $CKEditor->config['language'] = 'uk';
             $CKEditor->config ['toolbar'] =
-                    array(
-                        array('Source'),
-                        array('Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo'),
-                        array('SelectAll', 'RemoveFormat', 'Maximize', 'ShowBlocks'),
-                        '/',
-                        array('Font', 'FontSize'),
-                        array('Bold', 'Italic', 'Underline', 'Subscript', 'Superscript' ),
-                        array('TextColor', 'BGColor'),
-                        array('NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 'BidiLtr', 'BidiRtl'),
-                        array('Image', 'Flash', 'SpecialChar'),
-                        
-            );
+                array(
+                    array('Source'),
+                    array('Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo'),
+                    array('SelectAll', 'RemoveFormat', 'Maximize', 'ShowBlocks'),
+                    '/',
+                    array('Font', 'FontSize'),
+                    array('Bold', 'Italic', 'Underline', 'Subscript', 'Superscript'),
+                    array('TextColor', 'BGColor'),
+                    array('NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 'BidiLtr', 'BidiRtl'),
+                    array('Image', 'Flash', 'SpecialChar'),
+
+                );
             $CKEditor->basePath = '/editors/ckeditor/';
             $ckfinder = new CKFinder ();
             $ckfinder->BasePath = '/editors/ckfinder/'; // Note: BasePath property in CKFinder class starts with capital letter
@@ -305,51 +328,61 @@ function getTextEditor($i_type, $i_name, $i_value, $i_rows = 15, $i_cols = 50, $
     }
 }
 
-function getTextArea($i_name, $i_value, $hint = '', $i_rows = 5, $i_cols = 50) {
+function getTextArea($i_name, $i_value, $hint = '', $i_rows = 5, $i_cols = 50)
+{
     return '<textarea name=' . $i_name . ' cols=' . $i_cols . ' rows=' . $i_rows . ' title="' . convertTextValue($hint) . '">' . convertTextValue($i_value) . '</textarea>';
 }
 
-function getPasswordBox($i_name, $i_value, $size = 50, $maxlength = 0) {
+function getPasswordBox($i_name, $i_value, $size = 50, $maxlength = 0)
+{
     return '<input name="' . $i_name . '" value="' . convertTextValue($i_value) . '" class=inp type=password size=' . $size . (!empty($maxlength) ? " maxlength=$maxlength" : "") . '>';
 }
 
-function getHiddenElement($i_name, $i_value, $size = 50, $maxlength = 0, $i_additional = '') {
+function getHiddenElement($i_name, $i_value, $size = 50, $maxlength = 0, $i_additional = '')
+{
     return getInputElement($i_name, $i_value, $size, $maxlength, $i_additional, $i_type = 'hidden');
 }
 
-function getInputElement($i_name, $i_value, $size = 50, $maxlength = 0, $i_additional = '', $i_type = 'text') {
+function getInputElement($i_name, $i_value, $size = 50, $maxlength = 0, $i_additional = '', $i_type = 'text')
+{
     return '<input name="' . $i_name . '" value="' . convertTextValue(@$i_value) . '" class=inp type=' . $i_type . ' size=' . $size . ($maxlength > 0 ? " maxlength=$maxlength" : "") . $i_additional . '>';
 }
 
-function getCheckbox($i_name, $i_value, $text, $i_additional = '') {
+function getCheckbox($i_name, $i_value, $text, $i_additional = '')
+{
     return '<input name="' . $i_name . '" type=checkbox' . ($i_value ? ' checked=checked' : '') . $i_additional . '>' . $text;
 }
 
-function getOption($i_name, $i_value, $checked, $text, $i_additional = '') {
+function getOption($i_name, $i_value, $checked, $text, $i_additional = '')
+{
     return '<input name="' . $i_name . '" value="' . convertTextValue(@$i_value) . '" type=radio ' . ($checked ? ' checked=checked' : '') . $i_additional . '>' . $text;
 }
 
-function writeInputElement($i_name, $i_value, $size = 50, $maxlength = 0, $i_additional = '') {
+function writeInputElement($i_name, $i_value, $size = 50, $maxlength = 0, $i_additional = '')
+{
     echo getInputElement($i_name, $i_value, $size, $maxlength, $i_additional);
 }
 
-function getBar($i_content) {
+function getBar($i_content)
+{
     return '<table cellpadding=0 cellspacing=0 border=0 width="100%" style="border-left: 1px solid #E0E7F6; border-top: 1px solid #E0E7F6; border-right: 1px solid #CFD6E3; border-bottom: 1px solid #CFD6E3;"><tr><td colspan=3 height=1 style="background: #ffffff"><img src="images/1x1.gif" width=1 height=1></td></tr><tr style="background: url(images/bar-1-background.gif) repeat-x;"><td width=1 style="background: #ffffff"><img src="images/1x1.gif" width=1 height=32></td><td align=center>' . $i_content . '</td><td width=1 style="background: #ffffff"><img src="images/1x1.gif" width=1 height=32></td></tr><tr><td colspan=3 height=1 style="background: #ffffff"><img src="images/1x1.gif" width=1 height=1></td></tr></table>';
 }
 
-function getBarSmall($i_state, $i_content) {
+function getBarSmall($i_state, $i_content)
+{
     return '<table cellpadding=0 cellspacing=0 border=0 width="100%" style="border-left: 1px solid #E0E7F6; border-top: 1px solid #E0E7F6; border-right: 1px solid #CFD6E3;"><tr><td colspan=3 height=1 style="background: #ffffff"><img src="images/1x1.gif" width=1 height=1></td></tr><tr style="background: url(images/barsmall-' . $i_state . '-background.gif) repeat-x;"><td width=1 style="background: #ffffff"><img src="images/1x1.gif" width=1 height=24></td><td align=center>' . $i_content . '</td><td width=1 style="background: #ffffff"><img src="images/1x1.gif" width=1 height=24></td></tr><tr><td colspan=3 height=1 style="background: #ffffff"><img src="images/1x1.gif" width=1 height=1></td></tr></table>';
 }
 
-function writePanel2($i_items) {
+function writePanel2($i_items)
+{
     global $lngstr;
     echo '<p><table cellpadding=0 cellspacing=0 border=0 width="100%"><tr><td>';
     echo '<table cellpadding=0 cellspacing=0 border=0>';
     echo '<tr><td width=3><img src="images/1x1.gif" width=3 height=1></td>';
     reset($i_items);
-    if (list (, $i_item ) = each($i_items))
+    if (list (, $i_item) = each($i_items))
         echo '<td>' . getBarSmall($i_item [1], '&nbsp;&nbsp;<b>' . $i_item [0] . '</b>&nbsp;&nbsp;') . '</td>';
-    while (list (, $i_item ) = each($i_items)) {
+    while (list (, $i_item) = each($i_items)) {
         echo '<td width=5><img src="images/1x1.gif" width=5 height=1></td>';
 
         echo '<td>' . getBarSmall($i_item [1], '&nbsp;&nbsp;<b>' . $i_item [0] . '</b>&nbsp;&nbsp;') . '</td>';
@@ -361,7 +394,8 @@ function writePanel2($i_items) {
     echo '<table cellpadding=0 cellspacing=0 border=0 width="100%" style="background: #CFD6E3;"><tr><td height=1><img src="images/1x1.gif" width=1 height=1></tr></table>';
 }
 
-function writeInfoBar($i_content) {
+function writeInfoBar($i_content)
+{
     global $_COOKIES, $lngstr;
     $i_isvisible = (!isset($_COOKIE ["showinfobar"]) || $_COOKIE ["showinfobar"] != "N");
     if ($i_content) {
@@ -372,7 +406,8 @@ function writeInfoBar($i_content) {
     }
 }
 
-function writeQryTableHeaders($i_url, $i_tablefields, $i_order_no, $i_direction, $i_orderid = '') {
+function writeQryTableHeaders($i_url, $i_tablefields, $i_order_no, $i_direction, $i_orderid = '')
+{
     foreach ($i_tablefields as $i_fieldno => $i_field) {
         $i_content = $i_field [0];
         if ($i_field [2]) {
@@ -391,7 +426,70 @@ function writeQryTableHeaders($i_url, $i_tablefields, $i_order_no, $i_direction,
     }
 }
 
-function unregisterTestData() {
+function getUserSessionDB($id = null)
+{
+    global $G_SESSION, $g_db;
+    if ($id == null) {
+        $id = $G_SESSION ['userid'];
+    }
+    $out = false;
+    $i_rSet1 = $g_db->Execute("SELECT * FROM kkztusersessions WHERE user_id=" . $id);
+    if ($i_rSet1) {
+        if (!$i_rSet1->EOF)
+            $out = $i_rSet1->fields;
+        $i_rSet1->Close();
+    }
+    return $out;
+}
+
+function setUserSessionDB($id, $data)
+{
+    global $G_SESSION, $g_db;
+
+    if ($id == null) {
+        $id = $G_SESSION ['userid'];
+    }
+
+    if (!getUserSessionDB($id))
+        $i_rSet1 = $g_db->Execute("INSERT INTO kkztusersessions (`testid`) VALUES ('" . $id . "','" . $data['testid'] . "'");
+    else
+        $i_rSet1 = $g_db->Execute("UPDATE kkztusersessions set `testid` = '" . $data['testid'] . "' WHERE user_id = " . $id);
+
+    if ($i_rSet1 === false)
+        showDBError('updateDB', 1);
+
+}
+
+function removeUserSessionDB($id)
+{
+    global $G_SESSION, $g_db;
+
+    if ($id == null) {
+        $id = $G_SESSION ['userid'];
+    }
+
+    $i_rSet1 = $g_db->Execute("DELETE FROM kkztusersessions WHERE user_id = " . $id);
+    if ($i_rSet1 === false)
+        showDBError('updateDB', 1);
+
+}
+
+function getUserSessionTest($id = null)
+{
+    $user = getUserSessionDB($id);
+    if ($user) {
+        return $user['testid'];
+    }
+    return false;
+}
+
+function setUserSessionTest($id, $test)
+{
+    setUserSessionDB($id, array("testid" => $test));
+}
+
+function unregisterTestData()
+{
     global $G_SESSION;
 
     unset($G_SESSION ['testid']);
@@ -429,16 +527,18 @@ function unregisterTestData() {
     unset($G_SESSION ['yt_teststoppedat']);
 }
 
-function getShuffledArray($i_array, $i_count = 0) {
-    srand((float) microtime() * 10000000);
+function getShuffledArray($i_array, $i_count = 0)
+{
+    srand((float)microtime() * 10000000);
     shuffle($i_array);
     return $i_array;
 }
 
-function showTestQuestion($i_questionno, $i_questionid) {
+function showTestQuestion($i_questionno, $i_questionid)
+{
     global $g_db, $G_SESSION, $lngstr, $srv_settings;
 
-    $i_rSet2 = $g_db->Execute("SELECT * FROM " . $srv_settings ['table_prefix'] . "questions WHERE questionid=" . $i_questionid);
+    $i_rSet2 = $g_db->Execute("SELECT * FROM " . $srv_settings ['table_prefix'] . "questions WHERE questionid = " . $i_questionid);
     if (!$i_rSet2) {
         showDBError('showTestQuestion', 1);
     } else {
@@ -455,7 +555,7 @@ function showTestQuestion($i_questionno, $i_questionid) {
     $i_answer_text = array();
     $i_answer_feedback = array();
     $i_answercount = 0;
-    $i_rSet3 = $g_db->Execute("SELECT answer_text, answer_feedback FROM " . $srv_settings ['table_prefix'] . "answers WHERE questionid=" . $i_questionid . " ORDER BY answerid");
+    $i_rSet3 = $g_db->Execute("SELECT answer_text, answer_feedback FROM " . $srv_settings ['table_prefix'] . "answers WHERE questionid = " . $i_questionid . " ORDER BY answerid");
     if (!$i_rSet3) {
         showDBError('showTestQuestion', 2);
     } else {
@@ -500,7 +600,8 @@ function showTestQuestion($i_questionno, $i_questionid) {
     return true;
 }
 
-function addNewUser($i_username = '', $i_password = '', $i_userdata = array(), $i_groupids = array()) {
+function addNewUser($i_username = '', $i_password = '', $i_userdata = array(), $i_groupids = array())
+{
     global $g_db, $srv_settings;
     $i_email = isset($i_userdata ['email']) ? $i_userdata ['email'] : '';
     $i_title = isset($i_userdata ['title']) ? $i_userdata ['title'] : '';
@@ -557,71 +658,72 @@ function addNewUser($i_username = '', $i_password = '', $i_userdata = array(), $
     $i_pass_hash = md5($i_password);
 
     $qry_str = "INSERT INTO " . $srv_settings ['table_prefix'] . "users(user_name, user_passhash, user_email, user_title, user_firstname, user_lastname, user_middlename, user_address, user_city, user_state, user_zip, user_country, user_phone, user_fax, user_mobile, user_pager, user_ipphone, user_webpage, user_icq, user_msn, user_aol, user_gender, user_birthday, user_husbandwife, user_children, user_trainer, user_photo, user_company, user_cposition, user_department, user_coffice, user_caddress, user_ccity, user_cstate, user_czip, user_ccountry, user_cphone, user_cfax, user_cmobile, user_cpager, user_cipphone, user_cwebpage, user_cphoto, user_ufield1, user_ufield2, user_ufield3, user_ufield4, user_ufield5, user_ufield6, user_ufield7, user_ufield8, user_ufield9, user_ufield10, user_joindate, user_logindate, user_enabled) VALUES(";
-    $qry_str .= $g_db->qstr($i_username, get_magic_quotes_gpc()) . ",";
-    $qry_str .= $g_db->qstr($i_pass_hash, get_magic_quotes_gpc()) . ",";
-    $qry_str .= $g_db->qstr($i_email, get_magic_quotes_gpc()) . ",";
-    $qry_str .= $g_db->qstr($i_title, get_magic_quotes_gpc()) . ",";
-    $qry_str .= $g_db->qstr($i_firstname, get_magic_quotes_gpc()) . ",";
-    $qry_str .= $g_db->qstr($i_lastname, get_magic_quotes_gpc()) . ",";
-    $qry_str .= $g_db->qstr($i_middlename, get_magic_quotes_gpc()) . ",";
-    $qry_str .= $g_db->qstr($i_address, get_magic_quotes_gpc()) . ",";
-    $qry_str .= $g_db->qstr($i_city, get_magic_quotes_gpc()) . ",";
-    $qry_str .= $g_db->qstr($i_state, get_magic_quotes_gpc()) . ",";
-    $qry_str .= $g_db->qstr($i_zip, get_magic_quotes_gpc()) . ",";
-    $qry_str .= $g_db->qstr($i_country, get_magic_quotes_gpc()) . ",";
-    $qry_str .= $g_db->qstr($i_phone, get_magic_quotes_gpc()) . ",";
-    $qry_str .= $g_db->qstr($i_fax, get_magic_quotes_gpc()) . ",";
-    $qry_str .= $g_db->qstr($i_mobile, get_magic_quotes_gpc()) . ",";
-    $qry_str .= $g_db->qstr($i_pager, get_magic_quotes_gpc()) . ",";
-    $qry_str .= $g_db->qstr($i_ipphone, get_magic_quotes_gpc()) . ",";
-    $qry_str .= $g_db->qstr($i_webpage, get_magic_quotes_gpc()) . ",";
-    $qry_str .= $g_db->qstr($i_icq, get_magic_quotes_gpc()) . ",";
-    $qry_str .= $g_db->qstr($i_msn, get_magic_quotes_gpc()) . ",";
-    $qry_str .= $g_db->qstr($i_aol, get_magic_quotes_gpc()) . ",";
-    $qry_str .= $g_db->qstr($i_gender, get_magic_quotes_gpc()) . ",";
-    $qry_str .= $g_db->qstr($i_birthday, get_magic_quotes_gpc()) . ",";
-    $qry_str .= $g_db->qstr($i_husbandwife, get_magic_quotes_gpc()) . ",";
-    $qry_str .= $g_db->qstr($i_children, get_magic_quotes_gpc()) . ",";
-    $qry_str .= $g_db->qstr($i_trainer, get_magic_quotes_gpc()) . ",";
-    $qry_str .= $g_db->qstr($i_photo, get_magic_quotes_gpc()) . ",";
-    $qry_str .= $g_db->qstr($i_company, get_magic_quotes_gpc()) . ",";
-    $qry_str .= $g_db->qstr($i_cposition, get_magic_quotes_gpc()) . ",";
-    $qry_str .= $g_db->qstr($i_department, get_magic_quotes_gpc()) . ",";
-    $qry_str .= $g_db->qstr($i_coffice, get_magic_quotes_gpc()) . ",";
-    $qry_str .= $g_db->qstr($i_caddress, get_magic_quotes_gpc()) . ",";
-    $qry_str .= $g_db->qstr($i_ccity, get_magic_quotes_gpc()) . ",";
-    $qry_str .= $g_db->qstr($i_cstate, get_magic_quotes_gpc()) . ",";
-    $qry_str .= $g_db->qstr($i_czip, get_magic_quotes_gpc()) . ",";
-    $qry_str .= $g_db->qstr($i_ccountry, get_magic_quotes_gpc()) . ",";
-    $qry_str .= $g_db->qstr($i_cphone, get_magic_quotes_gpc()) . ",";
-    $qry_str .= $g_db->qstr($i_cfax, get_magic_quotes_gpc()) . ",";
-    $qry_str .= $g_db->qstr($i_cmobile, get_magic_quotes_gpc()) . ",";
-    $qry_str .= $g_db->qstr($i_cpager, get_magic_quotes_gpc()) . ",";
-    $qry_str .= $g_db->qstr($i_cipphone, get_magic_quotes_gpc()) . ",";
-    $qry_str .= $g_db->qstr($i_cwebpage, get_magic_quotes_gpc()) . ",";
-    $qry_str .= $g_db->qstr($i_cphoto, get_magic_quotes_gpc()) . ",";
-    $qry_str .= $g_db->qstr($i_ufield1, get_magic_quotes_gpc()) . ",";
-    $qry_str .= $g_db->qstr($i_ufield2, get_magic_quotes_gpc()) . ",";
-    $qry_str .= $g_db->qstr($i_ufield3, get_magic_quotes_gpc()) . ",";
-    $qry_str .= $g_db->qstr($i_ufield4, get_magic_quotes_gpc()) . ",";
-    $qry_str .= $g_db->qstr($i_ufield5, get_magic_quotes_gpc()) . ",";
-    $qry_str .= $g_db->qstr($i_ufield6, get_magic_quotes_gpc()) . ",";
-    $qry_str .= $g_db->qstr($i_ufield7, get_magic_quotes_gpc()) . ",";
-    $qry_str .= $g_db->qstr($i_ufield8, get_magic_quotes_gpc()) . ",";
-    $qry_str .= $g_db->qstr($i_ufield9, get_magic_quotes_gpc()) . ",";
-    $qry_str .= $g_db->qstr($i_ufield10, get_magic_quotes_gpc()) . ",";
-    $qry_str .= time() . ",";
+    $qry_str .= $g_db->qstr($i_username, get_magic_quotes_gpc()) . ", ";
+    $qry_str .= $g_db->qstr($i_pass_hash, get_magic_quotes_gpc()) . ", ";
+    $qry_str .= $g_db->qstr($i_email, get_magic_quotes_gpc()) . ", ";
+    $qry_str .= $g_db->qstr($i_title, get_magic_quotes_gpc()) . ", ";
+    $qry_str .= $g_db->qstr($i_firstname, get_magic_quotes_gpc()) . ", ";
+    $qry_str .= $g_db->qstr($i_lastname, get_magic_quotes_gpc()) . ", ";
+    $qry_str .= $g_db->qstr($i_middlename, get_magic_quotes_gpc()) . ", ";
+    $qry_str .= $g_db->qstr($i_address, get_magic_quotes_gpc()) . ", ";
+    $qry_str .= $g_db->qstr($i_city, get_magic_quotes_gpc()) . ", ";
+    $qry_str .= $g_db->qstr($i_state, get_magic_quotes_gpc()) . ", ";
+    $qry_str .= $g_db->qstr($i_zip, get_magic_quotes_gpc()) . ", ";
+    $qry_str .= $g_db->qstr($i_country, get_magic_quotes_gpc()) . ", ";
+    $qry_str .= $g_db->qstr($i_phone, get_magic_quotes_gpc()) . ", ";
+    $qry_str .= $g_db->qstr($i_fax, get_magic_quotes_gpc()) . ", ";
+    $qry_str .= $g_db->qstr($i_mobile, get_magic_quotes_gpc()) . ", ";
+    $qry_str .= $g_db->qstr($i_pager, get_magic_quotes_gpc()) . ", ";
+    $qry_str .= $g_db->qstr($i_ipphone, get_magic_quotes_gpc()) . ", ";
+    $qry_str .= $g_db->qstr($i_webpage, get_magic_quotes_gpc()) . ", ";
+    $qry_str .= $g_db->qstr($i_icq, get_magic_quotes_gpc()) . ", ";
+    $qry_str .= $g_db->qstr($i_msn, get_magic_quotes_gpc()) . ", ";
+    $qry_str .= $g_db->qstr($i_aol, get_magic_quotes_gpc()) . ", ";
+    $qry_str .= $g_db->qstr($i_gender, get_magic_quotes_gpc()) . ", ";
+    $qry_str .= $g_db->qstr($i_birthday, get_magic_quotes_gpc()) . ", ";
+    $qry_str .= $g_db->qstr($i_husbandwife, get_magic_quotes_gpc()) . ", ";
+    $qry_str .= $g_db->qstr($i_children, get_magic_quotes_gpc()) . ", ";
+    $qry_str .= $g_db->qstr($i_trainer, get_magic_quotes_gpc()) . ", ";
+    $qry_str .= $g_db->qstr($i_photo, get_magic_quotes_gpc()) . ", ";
+    $qry_str .= $g_db->qstr($i_company, get_magic_quotes_gpc()) . ", ";
+    $qry_str .= $g_db->qstr($i_cposition, get_magic_quotes_gpc()) . ", ";
+    $qry_str .= $g_db->qstr($i_department, get_magic_quotes_gpc()) . ", ";
+    $qry_str .= $g_db->qstr($i_coffice, get_magic_quotes_gpc()) . ", ";
+    $qry_str .= $g_db->qstr($i_caddress, get_magic_quotes_gpc()) . ", ";
+    $qry_str .= $g_db->qstr($i_ccity, get_magic_quotes_gpc()) . ", ";
+    $qry_str .= $g_db->qstr($i_cstate, get_magic_quotes_gpc()) . ", ";
+    $qry_str .= $g_db->qstr($i_czip, get_magic_quotes_gpc()) . ", ";
+    $qry_str .= $g_db->qstr($i_ccountry, get_magic_quotes_gpc()) . ", ";
+    $qry_str .= $g_db->qstr($i_cphone, get_magic_quotes_gpc()) . ", ";
+    $qry_str .= $g_db->qstr($i_cfax, get_magic_quotes_gpc()) . ", ";
+    $qry_str .= $g_db->qstr($i_cmobile, get_magic_quotes_gpc()) . ", ";
+    $qry_str .= $g_db->qstr($i_cpager, get_magic_quotes_gpc()) . ", ";
+    $qry_str .= $g_db->qstr($i_cipphone, get_magic_quotes_gpc()) . ", ";
+    $qry_str .= $g_db->qstr($i_cwebpage, get_magic_quotes_gpc()) . ", ";
+    $qry_str .= $g_db->qstr($i_cphoto, get_magic_quotes_gpc()) . ", ";
+    $qry_str .= $g_db->qstr($i_ufield1, get_magic_quotes_gpc()) . ", ";
+    $qry_str .= $g_db->qstr($i_ufield2, get_magic_quotes_gpc()) . ", ";
+    $qry_str .= $g_db->qstr($i_ufield3, get_magic_quotes_gpc()) . ", ";
+    $qry_str .= $g_db->qstr($i_ufield4, get_magic_quotes_gpc()) . ", ";
+    $qry_str .= $g_db->qstr($i_ufield5, get_magic_quotes_gpc()) . ", ";
+    $qry_str .= $g_db->qstr($i_ufield6, get_magic_quotes_gpc()) . ", ";
+    $qry_str .= $g_db->qstr($i_ufield7, get_magic_quotes_gpc()) . ", ";
+    $qry_str .= $g_db->qstr($i_ufield8, get_magic_quotes_gpc()) . ", ";
+    $qry_str .= $g_db->qstr($i_ufield9, get_magic_quotes_gpc()) . ", ";
+    $qry_str .= $g_db->qstr($i_ufield10, get_magic_quotes_gpc()) . ", ";
+    $qry_str .= time() . ", ";
     $qry_str .= "0,";
     $qry_str .= "1)";
     if ($g_db->Execute($qry_str) === false)
         showDBError(__file__, 1);
-    $i_userid = (int) $g_db->Insert_ID();
+    $i_userid = (int)$g_db->Insert_ID();
 
     manageUserGroups(array($i_userid), $i_groupids, true);
     return $i_userid;
 }
 
-function emailNewUserDetails($i_username = '', $i_password = '', $i_userdata = array()) {
+function emailNewUserDetails($i_username = '', $i_password = '', $i_userdata = array())
+{
     global $g_db, $srv_settings;
     $i_email = isset($i_userdata ['email']) ? $i_userdata ['email'] : '';
     $i_title = isset($i_userdata ['title']) ? $i_userdata ['title'] : '';
@@ -676,12 +778,12 @@ function emailNewUserDetails($i_username = '', $i_password = '', $i_userdata = a
     $i_ufield10 = isset($i_userdata ['ufield10']) ? $i_userdata ['ufield10'] : '';
     $i_isok = true;
 
-    $i_isok = $i_isok && ($i_rSet3 = $g_db->SelectLimit("SELECT etemplate_from, etemplate_subject, etemplate_body FROM " . $srv_settings ['table_prefix'] . "etemplates WHERE etemplateid=" . SYSTEM_ETEMPLATES_REGISTRATION_INDEX, 1));
+    $i_isok = $i_isok && ($i_rSet3 = $g_db->SelectLimit("SELECT etemplate_from, etemplate_subject, etemplate_body FROM " . $srv_settings ['table_prefix'] . "etemplates WHERE etemplateid = " . SYSTEM_ETEMPLATES_REGISTRATION_INDEX, 1));
     if ($i_isok)
         $i_isok = $i_isok && (!$i_rSet3->EOF);
 
     if ($i_isok) {
-        $i_email_headers = "From: " . $i_rSet3->fields ["etemplate_from"] . "\nReply-To: " . $i_rSet3->fields ["etemplate_from"] . "\n" . IGT_EMAIL_AGENT_NAME . "\nX-Priority: 3 (Normal)";
+        $i_email_headers = "From: " . $i_rSet3->fields ["etemplate_from"] . "\nReply - To: " . $i_rSet3->fields ["etemplate_from"] . "\n" . IGT_EMAIL_AGENT_NAME . "\nX - Priority: 3 (Normal)";
         $i_email_subject = $i_rSet3->fields ["etemplate_subject"];
         $i_email_body = $i_rSet3->fields ["etemplate_body"];
         if ($i_email_body) {
@@ -743,33 +845,37 @@ function emailNewUserDetails($i_username = '', $i_password = '', $i_userdata = a
     }
 }
 
-function manageUserGroups($i_userids = array(), $i_groupids = array(), $i_addtogroup = true) {
+function manageUserGroups($i_userids = array(), $i_groupids = array(), $i_addtogroup = true)
+{
     global $g_db, $G_SESSION, $srv_settings;
 
     foreach ($i_userids as $i_userid) {
         foreach ($i_groupids as $i_groupid) {
             if ($i_addtogroup) {
-                $g_db->Execute("INSERT INTO " . $srv_settings ['table_prefix'] . "groups_users (groupid, userid) VALUES (" . $i_groupid . ", " . $i_userid . ")");
+                $g_db->Execute("INSERT INTO " . $srv_settings ['table_prefix'] . "groups_users(groupid, userid) VALUES(" . $i_groupid . ", " . $i_userid . ")");
             } else {
-                $g_db->Execute("DELETE FROM " . $srv_settings ['table_prefix'] . "groups_users WHERE groupid=" . $i_groupid . " AND userid=" . $i_userid);
+                $g_db->Execute("DELETE FROM " . $srv_settings ['table_prefix'] . "groups_users WHERE groupid = " . $i_groupid . " AND userid = " . $i_userid);
             }
         }
     }
 }
 
-function deleteUserByID($i_userid = 0) {
+function deleteUserByID($i_userid = 0)
+{
     global $g_db, $srv_settings;
     if ($i_userid > 0)
-        $g_db->Execute("DELETE FROM " . $srv_settings ['table_prefix'] . "users WHERE userid=" . $i_userid);
+        $g_db->Execute("DELETE FROM " . $srv_settings ['table_prefix'] . "users WHERE userid = " . $i_userid);
 }
 
-function deleteUserByUserName($i_username = '') {
+function deleteUserByUserName($i_username = '')
+{
     global $g_db, $srv_settings;
     $i_username = $g_db->qstr($i_username, 0);
-    $g_db->Execute("DELETE FROM " . $srv_settings ['table_prefix'] . "users WHERE user_name=" . $i_username);
+    $g_db->Execute("DELETE FROM " . $srv_settings ['table_prefix'] . "users WHERE user_name = " . $i_username);
 }
 
-function signinUser($i_username = '', $i_password = '', $i_isguest = false) {
+function signinUser($i_username = '', $i_password = '', $i_isguest = false)
+{
     header('HTTP/1.1 403 Forbidden');
     header('Location: http://kkzcore.pp.ua/?site=2');
     die();
@@ -800,36 +906,36 @@ function signinUser($i_username = '', $i_password = '', $i_isguest = false) {
             $access = 1;
         }
 
-        $G_SESSION ['userid'] = (int) $xml->user->id;
-        $G_SESSION ['username'] = (string) $i_username;
+        $G_SESSION ['userid'] = (int)$xml->user->id;
+        $G_SESSION ['username'] = (string)$i_username;
         $G_SESSION ['email'] = "";
         $G_SESSION ['title'] = "";
-        $G_SESSION ['firstname'] = (string) $xml->user->name;
-        $G_SESSION ['lastname'] = (string) $xml->user->lastname;
-        $G_SESSION ['middlename'] = (string) $xml->user->fathername;
-        $G_SESSION ['usergroup'] = (int) $xml->user->group;
-        $G_SESSION ['usercom'] = (int) $xml->user->commission;
-        $G_SESSION ['allcoms'] = (int) $xml->user->allcoms;
+        $G_SESSION ['firstname'] = (string)$xml->user->name;
+        $G_SESSION ['lastname'] = (string)$xml->user->lastname;
+        $G_SESSION ['middlename'] = (string)$xml->user->fathername;
+        $G_SESSION ['usergroup'] = (int)$xml->user->group;
+        $G_SESSION ['usercom'] = (int)$xml->user->commission;
+        $G_SESSION ['allcoms'] = (int)$xml->user->allcoms;
 
-        $query = "SELECT * FROM kkztgroups WHERE groupid=" . $access . "";
+        $query = "SELECT * FROM kkztgroups WHERE groupid = " . $access . "";
         $i_rSet2 = $g_db->SelectLimit($query, 1);
         if (!$i_rSet2) {
             echo "error 1\n";
             return false;
         } else {
             if (!$i_rSet2->EOF) {
-                $G_SESSION ['access_tests'] = (int) $i_rSet2->fields ["access_tests"];
-                $G_SESSION ['access_testmanager'] = (int) $i_rSet2->fields ["access_testmanager"];
-                $G_SESSION ['access_gradingsystems'] = (int) $i_rSet2->fields ["access_gradingsystems"];
-                $G_SESSION ['access_emailtemplates'] = (int) $i_rSet2->fields ["access_emailtemplates"];
-                $G_SESSION ['access_reporttemplates'] = (int) $i_rSet2->fields ["access_reporttemplates"];
-                $G_SESSION ['access_reportsmanager'] = (int) $i_rSet2->fields ["access_reportsmanager"];
-                $G_SESSION ['access_questionbank'] = (int) $i_rSet2->fields ["access_questionbank"];
-                $G_SESSION ['access_subjects'] = (int) $i_rSet2->fields ["access_subjects"];
-                $G_SESSION ['access_groups'] = (int) $i_rSet2->fields ["access_groups"];
-                $G_SESSION ['access_users'] = (int) $i_rSet2->fields ["access_users"];
-                $G_SESSION ['access_visitors'] = (int) $i_rSet2->fields ["access_visitors"];
-                $G_SESSION ['access_config'] = (int) $i_rSet2->fields ["access_config"];
+                $G_SESSION ['access_tests'] = (int)$i_rSet2->fields ["access_tests"];
+                $G_SESSION ['access_testmanager'] = (int)$i_rSet2->fields ["access_testmanager"];
+                $G_SESSION ['access_gradingsystems'] = (int)$i_rSet2->fields ["access_gradingsystems"];
+                $G_SESSION ['access_emailtemplates'] = (int)$i_rSet2->fields ["access_emailtemplates"];
+                $G_SESSION ['access_reporttemplates'] = (int)$i_rSet2->fields ["access_reporttemplates"];
+                $G_SESSION ['access_reportsmanager'] = (int)$i_rSet2->fields ["access_reportsmanager"];
+                $G_SESSION ['access_questionbank'] = (int)$i_rSet2->fields ["access_questionbank"];
+                $G_SESSION ['access_subjects'] = (int)$i_rSet2->fields ["access_subjects"];
+                $G_SESSION ['access_groups'] = (int)$i_rSet2->fields ["access_groups"];
+                $G_SESSION ['access_users'] = (int)$i_rSet2->fields ["access_users"];
+                $G_SESSION ['access_visitors'] = (int)$i_rSet2->fields ["access_visitors"];
+                $G_SESSION ['access_config'] = (int)$i_rSet2->fields ["access_config"];
             } else {
                 $G_SESSION ['access_tests'] = 0;
                 $G_SESSION ['access_testmanager'] = 0;
@@ -847,15 +953,16 @@ function signinUser($i_username = '', $i_password = '', $i_isguest = false) {
             $i_rSet2->Close();
         }
         if (isset($G_SESSION ['visitorid']))
-            $g_db->Execute("UPDATE " . $srv_settings ['table_prefix'] . "visitors SET userid=" . $G_SESSION ['userid'] . " WHERE visitorid=" . $G_SESSION ['visitorid']);
+            $g_db->Execute("UPDATE " . $srv_settings ['table_prefix'] . "visitors SET userid = " . $G_SESSION ['userid'] . " WHERE visitorid = " . $G_SESSION ['visitorid']);
         return true;
     }
 }
 
-function signinUserById($key) {
+function signinUserById($key)
+{
     global $g_db, $srv_settings, $core;
-    
-    $G_SESSION = &$_SESSION['MAIN'];
+
+    $G_SESSION = & $_SESSION['MAIN'];
 
     $rand = mt_rand();
     $checksum = $rand . 'aca1ad4c1f9138e995b89f683ee9e16b';
@@ -865,7 +972,7 @@ function signinUserById($key) {
 
     $xml = simplexml_load_file($url);
 
-    if (strlen((string) $xml->user->name) == 0) {
+    if (strlen((string)$xml->user->name) == 0) {
         return false;
     } else {
         if ($xml->user->access < 50) {
@@ -881,38 +988,38 @@ function signinUserById($key) {
             $access = 1;
         }
 
-        $G_SESSION ['userid'] = (int) $xml->user->id;
-        $G_SESSION ['username'] = (string) $xml->user->login;
+        $G_SESSION ['userid'] = (int)$xml->user->id;
+        $G_SESSION ['username'] = (string)$xml->user->login;
         $G_SESSION ['email'] = "";
         $G_SESSION ['title'] = "";
-        $G_SESSION ['firstname'] = (string) $xml->user->name;
-        $G_SESSION ['lastname'] = (string) $xml->user->lastname;
-        $G_SESSION ['middlename'] = (string) $xml->user->fathername;
-        $G_SESSION ['usergroup'] = (int) $xml->user->group;
+        $G_SESSION ['firstname'] = (string)$xml->user->name;
+        $G_SESSION ['lastname'] = (string)$xml->user->lastname;
+        $G_SESSION ['middlename'] = (string)$xml->user->fathername;
+        $G_SESSION ['usergroup'] = (int)$xml->user->group;
         $G_SESSION ['usergroup_txt'] = $core->getgroup($G_SESSION ['usergroup']);
-        $G_SESSION ['usergroup_txt']= $G_SESSION ['usergroup_txt']['name'];
-        $G_SESSION ['usercom'] = (int) $xml->user->commission;
-        $G_SESSION ['allcoms'] = (int) $xml->user->allcoms;
+        $G_SESSION ['usergroup_txt'] = $G_SESSION ['usergroup_txt']['name'];
+        $G_SESSION ['usercom'] = (int)$xml->user->commission;
+        $G_SESSION ['allcoms'] = (int)$xml->user->allcoms;
 
-        $query = "SELECT * FROM kkztgroups WHERE groupid=" . $access . "";
+        $query = "SELECT * FROM kkztgroups WHERE groupid = " . $access . "";
         $i_rSet2 = $g_db->SelectLimit($query, 1);
         if (!$i_rSet2) {
             echo "error 1\n";
             return false;
         } else {
             if ($i_rSet2->RecordCount() > 0) {
-                $G_SESSION ['access_tests'] = (int) $i_rSet2->fields ["access_tests"];
-                $G_SESSION ['access_testmanager'] = (int) $i_rSet2->fields ["access_testmanager"];
-                $G_SESSION ['access_gradingsystems'] = (int) $i_rSet2->fields ["access_gradingsystems"];
-                $G_SESSION ['access_emailtemplates'] = (int) $i_rSet2->fields ["access_emailtemplates"];
-                $G_SESSION ['access_reporttemplates'] = (int) $i_rSet2->fields ["access_reporttemplates"];
-                $G_SESSION ['access_reportsmanager'] = (int) $i_rSet2->fields ["access_reportsmanager"];
-                $G_SESSION ['access_questionbank'] = (int) $i_rSet2->fields ["access_questionbank"];
-                $G_SESSION ['access_subjects'] = (int) $i_rSet2->fields ["access_subjects"];
-                $G_SESSION ['access_groups'] = (int) $i_rSet2->fields ["access_groups"];
-                $G_SESSION ['access_users'] = (int) $i_rSet2->fields ["access_users"];
-                $G_SESSION ['access_visitors'] = (int) $i_rSet2->fields ["access_visitors"];
-                $G_SESSION ['access_config'] = (int) $i_rSet2->fields ["access_config"];
+                $G_SESSION ['access_tests'] = (int)$i_rSet2->fields ["access_tests"];
+                $G_SESSION ['access_testmanager'] = (int)$i_rSet2->fields ["access_testmanager"];
+                $G_SESSION ['access_gradingsystems'] = (int)$i_rSet2->fields ["access_gradingsystems"];
+                $G_SESSION ['access_emailtemplates'] = (int)$i_rSet2->fields ["access_emailtemplates"];
+                $G_SESSION ['access_reporttemplates'] = (int)$i_rSet2->fields ["access_reporttemplates"];
+                $G_SESSION ['access_reportsmanager'] = (int)$i_rSet2->fields ["access_reportsmanager"];
+                $G_SESSION ['access_questionbank'] = (int)$i_rSet2->fields ["access_questionbank"];
+                $G_SESSION ['access_subjects'] = (int)$i_rSet2->fields ["access_subjects"];
+                $G_SESSION ['access_groups'] = (int)$i_rSet2->fields ["access_groups"];
+                $G_SESSION ['access_users'] = (int)$i_rSet2->fields ["access_users"];
+                $G_SESSION ['access_visitors'] = (int)$i_rSet2->fields ["access_visitors"];
+                $G_SESSION ['access_config'] = (int)$i_rSet2->fields ["access_config"];
             } else {
                 $G_SESSION ['access_tests'] = 0;
                 $G_SESSION ['access_testmanager'] = 0;
@@ -930,7 +1037,7 @@ function signinUserById($key) {
             $i_rSet2->Close();
         }
         if (isset($G_SESSION ['visitorid']))
-            $g_db->Execute("UPDATE " . $srv_settings ['table_prefix'] . "visitors SET userid=" . $G_SESSION ['userid'] . " WHERE visitorid=" . $G_SESSION ['visitorid']);
+            $g_db->Execute("UPDATE " . $srv_settings ['table_prefix'] . "visitors SET userid = " . $G_SESSION ['userid'] . " WHERE visitorid = " . $G_SESSION ['visitorid']);
 
         //header('Location: http://kkztest.pp.ua/');
         //print_r($_SESSION);
@@ -939,23 +1046,27 @@ function signinUserById($key) {
     }
 }
 
-function signoutUser() {
+function signoutUser()
+{
     session_destroy();
 }
 
-function getUserName($id) {
+function getUserName($id)
+{
     global $core;
     return $core->getuser($id);
 }
 
-function mb_str_replace($needle, $replacement, $haystack) {
+function mb_str_replace($needle, $replacement, $haystack)
+{
     return implode($replacement, mb_split($needle, $haystack));
 }
 
-function checkTestAnswer($i_questionno, $i_questionid, $i_answers) {
+function checkTestAnswer($i_questionno, $i_questionid, $i_answers)
+{
     global $g_db, $G_SESSION, $lngstr, $srv_settings;
 
-    $i_rSet1 = $g_db->Execute("SELECT * FROM " . $srv_settings ['table_prefix'] . "questions WHERE questionid=" . $i_questionid);
+    $i_rSet1 = $g_db->Execute("SELECT * FROM " . $srv_settings ['table_prefix'] . "questions WHERE questionid = " . $i_questionid);
     if (!$i_rSet1) {
         showDBError('checkTestAnswer', 1);
     } else {
@@ -980,7 +1091,7 @@ function checkTestAnswer($i_questionno, $i_questionid, $i_answers) {
         case QUESTION_TYPE_FILLINTHEBLANK :
 
             $i_answer_text = $i_answers [0];
-            $i_rSet2 = $g_db->Execute("SELECT answer_text, isregexp FROM " . $srv_settings ['table_prefix'] . "answers WHERE questionid=" . $i_questionid . " AND answerid=1");
+            $i_rSet2 = $g_db->Execute("SELECT answer_text, isregexp FROM " . $srv_settings ['table_prefix'] . "answers WHERE questionid = " . $i_questionid . " AND answerid = 1");
             if (!$i_rSet2) {
                 showDBError('checkTestAnswer', 4);
             } else {
@@ -1014,9 +1125,9 @@ function checkTestAnswer($i_questionno, $i_questionid, $i_answers) {
             break;
         case QUESTION_TYPE_MULTIPLECHOICE :
         case QUESTION_TYPE_TRUEFALSE :
-            $i_answerno = $G_SESSION ["yt_answers"] [$i_questionno] [(int) $i_answers - 1];
+            $i_answerno = $G_SESSION ["yt_answers"] [$i_questionno] [(int)$i_answers - 1];
             $i_answer_text = $i_answerno;
-            $i_rSet2 = $g_db->Execute("SELECT answer_correct, answer_percents FROM " . $srv_settings ['table_prefix'] . "answers WHERE questionid=" . $i_questionid . " AND answerid=" . $i_answerno);
+            $i_rSet2 = $g_db->Execute("SELECT answer_correct, answer_percents FROM " . $srv_settings ['table_prefix'] . "answers WHERE questionid = " . $i_questionid . " AND answerid = " . $i_answerno);
             if (!$i_rSet2) {
                 showDBError('checkTestAnswer', 2);
             } else {
@@ -1033,13 +1144,13 @@ function checkTestAnswer($i_questionno, $i_questionid, $i_answers) {
 
             $i_answer_set_count = 0;
             foreach ($i_answers as $val) {
-                $i_answerno [] = $G_SESSION ["yt_answers"] [$i_questionno] [(int) $val - 1];
+                $i_answerno [] = $G_SESSION ["yt_answers"] [$i_questionno] [(int)$val - 1];
                 $i_answer_set_count++;
             }
             sort($i_answerno, SORT_NUMERIC);
             $i_answer_set_correct = 0;
             $i_answer_set_incorrect = 0;
-            $i_rSet2 = $g_db->Execute("SELECT answerid, answer_correct FROM " . $srv_settings ['table_prefix'] . "answers WHERE questionid=" . $i_questionid);
+            $i_rSet2 = $g_db->Execute("SELECT answerid, answer_correct FROM " . $srv_settings ['table_prefix'] . "answers WHERE questionid = " . $i_questionid);
             if (!$i_rSet2) {
                 showDBError('checkTestAnswer', 3);
             } else {
@@ -1074,33 +1185,35 @@ function checkTestAnswer($i_questionno, $i_questionid, $i_answers) {
     $i_answer_text = $g_db->qstr($i_answer_text, get_magic_quotes_gpc());
     $i_timeexceeded = ($G_SESSION ["yt_teststop"] > 0) && ($G_SESSION ["yt_teststop"] < $i_now) ? 1 : 0;
     if ($i_questiontype == QUESTION_TYPE_ESSAY) {
-        $qry_str = "INSERT INTO " . $srv_settings ['table_prefix'] . "results_answers (result_answerid, resultid, questionid, test_questionid, result_answer_text, result_answer_points, result_answer_iscorrect, result_answer_timespent, result_answer_timeexceeded) VALUES (" . $i_questionno . ", " . $G_SESSION ["resultid"] . ", " . $i_questionid . ", " . $i_questionno_real . ", " . $i_answer_text . ", 0, 3, " . $i_timespent . ", " . $i_timeexceeded . ")";
+        $qry_str = "INSERT INTO " . $srv_settings ['table_prefix'] . "results_answers(result_answerid, resultid, questionid, test_questionid, result_answer_text, result_answer_points, result_answer_iscorrect, result_answer_timespent, result_answer_timeexceeded) VALUES(" . $i_questionno . ", " . $G_SESSION ["resultid"] . ", " . $i_questionid . ", " . $i_questionno_real . ", " . $i_answer_text . ", 0, 3, " . $i_timespent . ", " . $i_timeexceeded . ")";
     } else {
-        $qry_str = "INSERT INTO " . $srv_settings ['table_prefix'] . "results_answers (result_answerid, resultid, questionid, test_questionid, result_answer_text, result_answer_points, result_answer_iscorrect, result_answer_timespent, result_answer_timeexceeded) VALUES (" . $i_questionno . ", " . $G_SESSION ["resultid"] . ", " . $i_questionid . ", " . $i_questionno_real . ", " . $i_answer_text . ", " . $i_answer_points . ", " . $i_answer_correct . ", " . $i_timespent . ", " . $i_timeexceeded . ")";
+        $qry_str = "INSERT INTO " . $srv_settings ['table_prefix'] . "results_answers(result_answerid, resultid, questionid, test_questionid, result_answer_text, result_answer_points, result_answer_iscorrect, result_answer_timespent, result_answer_timeexceeded) VALUES(" . $i_questionno . ", " . $G_SESSION ["resultid"] . ", " . $i_questionid . ", " . $i_questionno_real . ", " . $i_answer_text . ", " . $i_answer_points . ", " . $i_answer_correct . ", " . $i_timespent . ", " . $i_timeexceeded . ")";
     }
     $g_db->Execute($qry_str);
 }
 
-function writeQuestion($i_question_text) {
-    echo '<table cellpadding=5 cellspacing=3 border=0 width="100%"><tr><td class=question>' . $i_question_text . '</td></tr></table>';
+function writeQuestion($i_question_text)
+{
+    echo '<table cellpadding=5 cellspacing=3 border=0 width="100 % "><tr><td class=question>' . $i_question_text . '</td></tr></table>';
 }
 
-function writeAnswer($i_questionno, $i_answerno, $i_question_type, $i_answer_text, $i_answer_feedback, $i_answer_given) {
+function writeAnswer($i_questionno, $i_answerno, $i_question_type, $i_answer_text, $i_answer_feedback, $i_answer_given)
+{
     global $G_SESSION;
     $i_isfeedback = $G_SESSION ["yt_state"] == TEST_STATE_QFEEDBACK;
-    echo '<table cellpadding=5 cellspacing=3 border=0 width="100%">';
+    echo '<table cellpadding=5 cellspacing=3 border=0 width="100 % ">';
     echo '<tr><td width="20">';
     switch ($i_question_type) {
         case QUESTION_TYPE_MULTIPLECHOICE :
         case QUESTION_TYPE_TRUEFALSE :
             $i_isselected = @$i_answer_given == $i_answerno;
             echo '<input type=radio name=answer[' . $i_questionno . '] value=' . $i_answerno . ($i_isselected ? ' checked' : '') . ($i_isfeedback ? ' disabled=disabled' : '') . '>';
-            echo '</td><td class=answer width="100%">' . $i_answer_text . '</td></tr>';
+            echo '</td><td class=answer width="100 % ">' . $i_answer_text . '</td></tr>';
             break;
         case QUESTION_TYPE_MULTIPLEANSWER :
             $i_isselected = @is_array($i_answer_given) && in_array($i_answerno, $i_answer_given);
             echo '<input type=checkbox name=answer[' . $i_questionno . '][] value=' . $i_answerno . ($i_isselected ? ' checked' : '') . ($i_isfeedback ? ' disabled=disabled' : '') . '>';
-            echo '</td><td class=answer width="100%">' . $i_answer_text . '</td></tr>';
+            echo '</td><td class=answer width="100 % ">' . $i_answer_text . '</td></tr>';
             break;
         case QUESTION_TYPE_FILLINTHEBLANK :
         case QUESTION_TYPE_ESSAY :
@@ -1109,56 +1222,62 @@ function writeAnswer($i_questionno, $i_answerno, $i_question_type, $i_answer_tex
             break;
     }
     if ($i_isfeedback && $i_isselected && $i_answer_feedback)
-        echo '<tr><td></td><td class=feedback width="100%">' . $i_answer_feedback . '</td></tr>';
+        echo '<tr><td></td><td class=feedback width="100 % ">' . $i_answer_feedback . '</td></tr>';
     echo '</table>';
 }
 
-function writeVTimer($hours, $minutes, $seconds) {
+function writeVTimer($hours, $minutes, $seconds)
+{
     if ($hours < 0)
         $hours = 0;
     if ($minutes < 0)
         $minutes = 0;
     if ($seconds < 0)
         $seconds = 0;
-    ?><script language=JavaScript type="text/javascript"><!--
+    ?>
+    <script language=JavaScript type="text / javascript"><!--
         var dStopTime = new Date();
         dStopTime.setHours(dStopTime.getHours()<?php
     if ($hours)
-        echo "+$hours";
-    ?>,dStopTime.getMinutes()<?php
+        echo " + $hours";
+    ?>, dStopTime.getMinutes()<?php
     if ($minutes)
-        echo "+$minutes";
-    ?>,dStopTime.getSeconds()<?php
+        echo " + $minutes";
+    ?>, dStopTime.getSeconds()<?php
     if ($seconds)
-        echo "+$seconds";
+        echo " + $seconds";
     ?>);
         var clockID = 0;
         function UpdateClock() {
-            if(clockID) {
+            if (clockID) {
                 clearTimeout(clockID);
                 clockID = 0;
             }
             var dNow = new Date();
-            if(dNow<dStopTime) {
-                dNow.setHours(dStopTime.getHours()-dNow.getHours(),dStopTime.getMinutes()-dNow.getMinutes(),dStopTime.getSeconds()-dNow.getSeconds());
-                strContent = "&nbsp;<b>"+setLeadingZero(dNow.getHours())+":"+setLeadingZero(dNow.getMinutes())+":"+setLeadingZero(dNow.getSeconds())+"</b>&nbsp;";
-                if(dNow.getMinutes()<1) strContent="<font color=#ff0000>"+strContent+"</font>";
-                document.getElementById("vtimer").innerHTML=strContent;
+            if (dNow < dStopTime) {
+                dNow.setHours(dStopTime.getHours() - dNow.getHours(), dStopTime.getMinutes() - dNow.getMinutes(), dStopTime.getSeconds() - dNow.getSeconds());
+                strContent = " & nbsp;<b > " + setLeadingZero(dNow.getHours()) + ":" + setLeadingZero(dNow.getMinutes()) + ":" + setLeadingZero(dNow.getSeconds()) + " </b >&nbsp;";
+                if (dNow.getMinutes() < 1) strContent = " < font color = #ff0000>" + strContent + "</font>";
+document . getElementById("vtimer") . innerHTML = strContent;
                 clockID = setTimeout("UpdateClock()", 500);
-            } else {
-                clearTimeout(clockID);
-                clockID = 0;
-                document.getElementById("vtimer").innerHTML = "<b>00:00:00</b>";
             }
-        }
-        function setLeadingZero(i) {
-            return (i<10) ? "0"+i : i;
-        }
-        clockID = setTimeout("UpdateClock()", 500);
-        //--></script><?php
+
+else {
+    clearTimeout(clockID);
+    clockID = 0;
+    document . getElementById("vtimer") . innerHTML = "<b>00:00:00</b>";
+}
+}
+function setLeadingZero(i) {
+    return (i < 10) ? "0" + i : i;
 }
 
-function readDiffTime($start, $end) {
+clockID = setTimeout("UpdateClock()", 500);
+//--></script><?php
+}
+
+function readDiffTime($start, $end)
+{
     $nseconds = $end - $start;
     $ndays = floor($nseconds / 86400);
     $nseconds = $nseconds % 86400;
@@ -1169,7 +1288,8 @@ function readDiffTime($start, $end) {
     return array("days" => $ndays, "hours" => $nhours, "minutes" => $nminutes, "seconds" => $nseconds);
 }
 
-function getTimeFormatted($i_seconds) {
+function getTimeFormatted($i_seconds)
+{
     global $lngstr;
     $i_result = '';
     $i_time = readDiffTime(0, $i_seconds);
@@ -1183,13 +1303,15 @@ function getTimeFormatted($i_seconds) {
     return $i_result;
 }
 
-function getCalendar($i_name, $i_year, $i_month, $i_day, $i_hour, $minute, $can_disable = false) {
-    $i_year_start = (int) date("Y") - 1;
+function getCalendar($i_name, $i_year, $i_month, $i_day, $i_hour, $minute, $can_disable = false)
+{
+    $i_year_start = (int)date("Y") - 1;
     $i_year_end = $i_year_start + 5;
     return getCalendarEx($i_name, $i_year, $i_month, $i_day, null, null, $i_year_start, $i_year_end, $can_disable);
 }
 
-function getCalendarEx($i_name, $i_year, $i_month, $i_day, $i_hour = null, $minute = null, $i_year_start, $i_year_end, $can_disable = false) {
+function getCalendarEx($i_name, $i_year, $i_month, $i_day, $i_hour = null, $minute = null, $i_year_start, $i_year_end, $can_disable = false)
+{
     global $lngstr;
     $i_result = '';
     $i_result .= '<table border=0>';
@@ -1252,7 +1374,8 @@ function getCalendarEx($i_name, $i_year, $i_month, $i_day, $i_hour = null, $minu
     return $i_result;
 }
 
-function makeTime($seconds) {
+function makeTime($seconds)
+{
     $i_nseconds = $seconds;
     $i_nhours = floor($i_nseconds / 3600);
     $i_nseconds = $i_nseconds % 3600;
@@ -1261,11 +1384,13 @@ function makeTime($seconds) {
     return sprintf("%02d:%02d:%02d", $i_nhours, $i_nminutes, $i_nseconds);
 }
 
-function writeTime($i_name, $seconds) {
+function writeTime($i_name, $seconds)
+{
     echo getTimeElement($i_name, $seconds);
 }
 
-function getTimeElement($i_name, $seconds) {
+function getTimeElement($i_name, $seconds)
+{
     global $lngstr;
     $i_result = "";
 
@@ -1299,7 +1424,8 @@ function getTimeElement($i_name, $seconds) {
     return $i_result;
 }
 
-function truncateString($text, $length = 60) {
+function truncateString($text, $length = 60)
+{
     if (strlen($text) > $length) {
         $text_truncated = mb_substr($text, 0, ($length - 3), 'UTF-8');
         $text_truncated .= '...';
@@ -1309,11 +1435,13 @@ function truncateString($text, $length = 60) {
     return $text_truncated;
 }
 
-function getTruncatedHTML($html, $length = 60) {
+function getTruncatedHTML($html, $length = 60)
+{
     return truncateString(strip_tags($html), $length);
 }
 
-function getURLAddon($i_initval = '', $i_excludeitems = array()) {
+function getURLAddon($i_initval = '', $i_excludeitems = array())
+{
     global $_GET;
     $i_url_addon = $i_initval;
     foreach ($_GET as $key => $val) {
@@ -1325,7 +1453,8 @@ function getURLAddon($i_initval = '', $i_excludeitems = array()) {
     return $i_url_addon;
 }
 
-function deleteResultRecord($i_resultid) {
+function deleteResultRecord($i_resultid)
+{
     global $g_db, $srv_settings;
 
     if ($g_db->Execute("DELETE FROM " . $srv_settings ['table_prefix'] . "results_answers WHERE resultid=" . $i_resultid) === false)
@@ -1335,7 +1464,8 @@ function deleteResultRecord($i_resultid) {
         showDBError('deleteResultRecord', 2);
 }
 
-function deleteQuestionLink($testid, $test_questionid) {
+function deleteQuestionLink($testid, $test_questionid)
+{
     global $g_db, $srv_settings;
     if ($g_db->Execute("DELETE FROM " . $srv_settings ['table_prefix'] . "tests_questions WHERE testid=" . $testid . " AND test_questionid=" . $test_questionid) === false)
         showDBError('deleteQuestionLink', 1);
@@ -1354,7 +1484,8 @@ function deleteQuestionLink($testid, $test_questionid) {
     }
 }
 
-function createQuestionLink($testid, $questionid) {
+function createQuestionLink($testid, $questionid)
+{
     global $g_db, $srv_settings;
     $i_questioncount = 0;
 
@@ -1365,7 +1496,8 @@ function createQuestionLink($testid, $questionid) {
         showDBError('createQuestionLink', 2);
 }
 
-function createGrade($i_gscaleid) {
+function createGrade($i_gscaleid)
+{
     global $g_db, $srv_settings;
     $i_gradecount = 0;
 
@@ -1377,7 +1509,8 @@ function createGrade($i_gscaleid) {
     return $i_gradecount;
 }
 
-function getScriptURL() {
+function getScriptURL()
+{
     if (!empty($_SERVER ["REQUEST_URI"])) {
         return $_SERVER ["REQUEST_URI"];
     } else if (!empty($_SERVER ["PHP_SELF"])) {
@@ -1401,7 +1534,8 @@ function getScriptURL() {
 }
 
 // ADD FUNCTIONS
-function getSelectSubj($name, $selected, $htmlOptions = array(), $allCourses = TRUE) {
+function getSelectSubj($name, $selected, $htmlOptions = array(), $allCourses = TRUE)
+{
     global $core;
     $out = '<select name="' . $name . '"';
     foreach ($htmlOptions as $key => $item) {
@@ -1416,21 +1550,22 @@ function getSelectSubj($name, $selected, $htmlOptions = array(), $allCourses = T
             $out .= '<OPTGROUP label="' . $com['name'] . '">';
             $subj = $core->getcourses_id($com['id']);
             foreach ($subj as $item) {
-                $out.= '<option value="' . $item['id'] . '" ' . (($item['id'] == $selected) ? 'selected="selected"' : '') . '>' . $item['name'] . '</option>';
+                $out .= '<option value="' . $item['id'] . '" ' . (($item['id'] == $selected) ? 'selected="selected"' : '') . '>' . $item['name'] . '</option>';
             }
             $out .= '</OPTGROUP>';
         }
     } else {
         $subj = $core->getcourses_id($_SESSION['MAIN']['usercom']);
         foreach ($subj as $item) {
-            $out.= '<option value="' . $item['id'] . '" ' . (($item['id'] == $selected) ? 'selected="selected"' : '') . '>' . $item['name'] . '</option>';
+            $out .= '<option value="' . $item['id'] . '" ' . (($item['id'] == $selected) ? 'selected="selected"' : '') . '>' . $item['name'] . '</option>';
         }
     }
     $out .= '</select>';
     return $out;
 }
 
-function getPageNav($page, $pages, $b_queryvars = '', $queryvars = '', $i_url_limitto_addon = "&limitto=50", $onPage = 20) {
+function getPageNav($page, $pages, $b_queryvars = '', $queryvars = '', $i_url_limitto_addon = "&limitto=50", $onPage = 20)
+{
     $nav = '';
     if ($pages > 1) {
         if ($page != 1) {
@@ -1461,4 +1596,5 @@ function getPageNav($page, $pages, $b_queryvars = '', $queryvars = '', $i_url_li
     }
     return $nav;
 }
+
 ?>

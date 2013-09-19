@@ -1,5 +1,5 @@
 <?php
-
+$test = true;
 require_once("inc/init.inc.php");
 if (isset($G_SESSION['userid'])) {
     if ($G_SESSION['access_tests'] > 1) {
