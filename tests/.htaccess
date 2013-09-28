@@ -1,4 +1,0 @@
-<IfModule mod_rewrite.c>
-    RewriteRule ^(.*/)?\.svn/ - [F]
-</IfModule>
-AddDefaultCharset utf-8
